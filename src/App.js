@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import DefaultLayout from "./components/Layouts/Default";
+import Home from './views/Home'
+import AddReservation from './views/Reservation/Add'
+import ReservationList from './views/Reservation'
+import VehicleList from './views/Vehicle'
+import DriverList from './views/Driver'
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Routes>
+            <Route path="/" element={<DefaultLayout />}>
+                <Route index element={<Home />} />
+                <Route path="/reservation/add" element={<AddReservation />} />
+                <Route path="/reservation" element={<ReservationList />} />
+                <Route path="/vehicle" element={<VehicleList />} />
+                <Route path="/driver" element={<DriverList />} />
+            </Route>
+            <Route path="*" element={<div>404 Not Found</div>} />
+        </Routes>
+    );
 }
 
 export default App;
