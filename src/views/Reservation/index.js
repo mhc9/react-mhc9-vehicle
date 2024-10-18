@@ -46,7 +46,9 @@ const ReservationList = () => {
                                 <FaUser /> {reservation.contact_name}
                             </p>
                             <p className="flex flex-row items-center gap-1">
-                                <FaMapMarkerAlt /> <span className="text-red-700">{reservation.destination}</span>
+                                <FaMapMarkerAlt />
+                                <span className="text-red-700 ml-1">{reservation.destination}</span>
+                                <span className="ml-2">จำนวน <b>{reservation.passengers}</b> คน</span>
                             </p>
                             <p className="text-[10px] text-gray-400 font-thin flex flex-row items-center gap-1 pl-1">
                                 <FaUndoAlt /> {moment(reservation.updated_at).format('YYYY-MM-DD HH:mm')} น.
