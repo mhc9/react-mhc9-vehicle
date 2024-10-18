@@ -62,7 +62,7 @@ const ReservationList = () => {
                                         </p>
                                         <p className="flex flex-row items-center gap-1">
                                             <FaMapMarkerAlt />
-                                            <span className={`badge badge-pill ${reservation.type_id === 1 ? 'bg-success' : (reservation.type_id === 2 ? 'bg-primary' : 'bg-warning')} ml-1`}>
+                                            <span className={`badge badge-pill ${reservation.type_id === 1 ? 'bg-success' : (reservation.type_id === 2 ? 'bg-primary' : 'bg-dark')} ml-1`}>
                                                 {reservation.type?.name}
                                             </span>
                                             <span>{reservation.type_id === 1 ? 'จาก' : 'ที่'}</span>

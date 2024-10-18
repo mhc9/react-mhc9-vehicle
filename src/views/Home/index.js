@@ -45,7 +45,8 @@ const Home = () => {
                         return {
                             id: reservation.id,
                             title: reservation.destination,
-                            start: `${reservation.reserve_date} ${reservation.reserve_time}`
+                            start: `${reservation.reserve_date} ${reservation.reserve_time}`,
+                            color: reservation.type_id === 1 ? '#4CAF50' : (reservation.type_id === 2 ? '#3498DB' : '#0D2238')
                         };
                     })} />
                 )}
