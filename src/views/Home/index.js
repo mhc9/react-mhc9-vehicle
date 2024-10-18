@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
+import { FaAddressCard, FaBus, FaTasks, FaUserTie } from "react-icons/fa";
 import { getEvents } from '../../features/slices/reservationSlice'
 import Calendar from '../../components/Calendar'
 import Loading from '../../components/Loading'
@@ -14,12 +15,29 @@ const Home = () => {
 
     return (
         <div className="p-2">
-            <div className="flex flex-row justify-around mb-2">
-                <Link to={'/reservation/add'} className="btn btn-primary">จองรถ</Link>
-                <Link to={'/reservation'} className="btn btn-primary">รายการจอง</Link>
-                <Link to={'/vehicle'} className="btn btn-primary">รถยนต์</Link>
-                <Link to={'/driver'} className="btn btn-primary">คนขับ</Link>
-            </div>
+            <ul className="nav nav-pills nav-justified">
+                <li className="nav-item">
+                    <Link to={'/reservation/add'} className="nav-link border hover:bg-zinc-200 flex flex-row items-center justify-center gap-1">
+                        <FaAddressCard /> จองรถ
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to={'/reservation'} className="nav-link border hover:bg-zinc-200 flex flex-row items-center justify-center gap-1">
+                        <FaTasks /> รายการจอง
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to={'/vehicle'} className="nav-link border hover:bg-zinc-200 flex flex-row items-center justify-center gap-1">
+                        <FaBus /> รถยนต์
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to={'/driver'} className="nav-link border hover:bg-zinc-200 flex flex-row items-center justify-center gap-1">
+                        <FaUserTie /> คนขับ
+                    </Link>
+                </li>
+            </ul>
+
             <div className="pt-4">
                 {isLoading && <div className="text-center"><Loading /></div>}
                 {(!isLoading && reservations) && (
