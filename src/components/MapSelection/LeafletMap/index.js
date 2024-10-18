@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 
 const center = [14.975299545851701, 102.1058307239686];
 
-const MapLeaflet = () => {
+const LeafletMap = () => {
 
     const handleMapClick = (e) => {
         const { lat, lng } = e.latlng;
@@ -51,4 +51,4 @@ const MapEventsHandler = ({ handleMapClick }) => {
     )
 }
 
-export default MapLeaflet
+export default LeafletMap

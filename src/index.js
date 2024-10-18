@@ -3,19 +3,24 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import { APIProvider } from '@vis.gl/react-google-maps'
 import OverWriteMomentBE from './utils/OverwriteMomentBE'
 import store from './features/store'
 import App from './App';
 import './index.css';
+
+const GMAP_API_KEY = process.env.REACT_APP_GMAP_API_KEY;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Router>
             <Provider store={store}>
-                <MuiPickersUtilsProvider utils={OverWriteMomentBE} locale="th">
-                    <App />
-                </MuiPickersUtilsProvider>
+                <APIProvider apiKey={GMAP_API_KEY}>
+                    <MuiPickersUtilsProvider utils={OverWriteMomentBE} locale="th">
+                        <App />
+                    </MuiPickersUtilsProvider>
+                </APIProvider>
             </Provider>
         </Router>
     </React.StrictMode>

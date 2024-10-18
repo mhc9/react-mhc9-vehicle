@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal } from 'react-bootstrap'
-import MapLeaflet from './MapLeaflet'
-// import MapGoogle from './MapGoogle'
+// import LeafletMap from './LeafletMap'
+import GoogleMap from './GoogleMap'
 
 const MapSelection = ({ isShow, hide, onSelect }) => {
     return (
@@ -10,12 +10,12 @@ const MapSelection = ({ isShow, hide, onSelect }) => {
             onHide={hide}
             size='xl'
         >
-            <Modal.Header closeButton>
-                <Modal.Title></Modal.Title>
+            <Modal.Header className="border py-1" closeButton>
+                <Modal.Title>เลือกสถานที่</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <div>
-                    <MapLeaflet />
+                    <GoogleMap />
                 </div>
             </Modal.Body>
         </Modal>
