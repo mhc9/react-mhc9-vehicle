@@ -31,6 +31,16 @@ export const getReservation = createAsyncThunk("reservation/getReservation", asy
     }
 });
 
+export const getEvents = createAsyncThunk("reservation/getEvents", async ({ url }, { rejectWithValue }) => {
+    try {
+        const res = await api.get(url);
+
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error);
+    }
+});
+
 export const store = createAsyncThunk("reservation/store", async (data, { rejectWithValue }) => {
     try {
         const res = await api.post(`/api/reservations`, data);
@@ -121,6 +131,20 @@ export const reservationSlice = createSlice({
     //         state.isLoading = false;
     //         state.error = payload;
     //     },
+    
+        .addCase(getEvents.pending, (state) => {
+            state.reservations = [];
+            state.isLoading = true;
+            state.error = null;
+        })
+        .addCase(getEvents.fulfilled, (state, { payload }) => {
+            state.reservations = payload;
+            state.isLoading = false
+        })
+        .addCase(getEvents.rejected, (state, { payload }) => {
+            state.isLoading = false;
+            state.error = payload;
+        })
         .addCase(store.pending, (state) => {
             state.isSuccess = false;
             state.error = null;
