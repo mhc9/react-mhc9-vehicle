@@ -10,7 +10,7 @@ const DefaultLayout = () => {
                     <div className="border rounded-full w-[40px] h-[40px] flex items-center justify-center">ST</div>
                 </div>
             </header>
-            <main className="p-3 min-h-[82vh] border">
+            <main className="p-3 min-h-[90vh] bg-white">
                 <Outlet />
             </main>
             <footer className="border p-2 bg-[#0A1931]">

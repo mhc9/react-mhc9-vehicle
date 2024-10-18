@@ -52,7 +52,7 @@ const AddReservation = () => {
 
             <h3 className="font-bold text-lg mb-2">จองรถ</h3>
 
-            <div>
+            <div className="border rounded-md p-3">
                 <Formik
                     initialValues={{
                         reserve_date: moment().format('YYYY-MM-DD'),
