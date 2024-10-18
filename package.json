@@ -2,6 +2,7 @@
   "name": "react-mhc9-vehicle",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@date-io/moment": "^1.3.13",
     "@fullcalendar/core": "^6.1.15",
