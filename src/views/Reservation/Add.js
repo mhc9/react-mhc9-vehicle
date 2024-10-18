@@ -7,9 +7,11 @@ import { toast } from 'react-toastify'
 import { Formik, Form } from 'formik'
 import moment from 'moment'
 import { store, resetSuccess } from '../../features/slices/reservationSlice'
+import { useStyles } from '../../hooks/useStyles'
 import MapSelection from '../../components/MapSelection'
 
 const AddReservation = () => {
+    const classes = useStyles();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { isSuccess } = useSelector(state => state.reservation);
@@ -41,12 +43,13 @@ const AddReservation = () => {
             <div>
                 <Formik
                     initialValues={{
-                        reserve_date: '',
-                        reserve_time: '',
+                        reserve_date: moment().format('YYYY-MM-DD'),
+                        reserve_time: moment().format('HH:mm:ss'),
+                        type_id: '',
                         contact_name: '',
                         contact_tel: '',
                         destination: '',
-                        coordinates: '',
+                        coordinate: '',
                         passengers: 1,
                         remark: ''
                     }}
@@ -58,9 +61,9 @@ const AddReservation = () => {
                                 <MapSelection
                                     isShow={showMap}
                                     hide={() => setShowMap(false)}
-                                    onSelect={() => {
-                                        formik.setFieldValue("destination", '');
-                                        formik.setFieldValue("coordinates", '');
+                                    onSelect={(coordinate) => {
+                                        // formik.setFieldValue("destination", '');
+                                        formik.setFieldValue("coordinate", coordinate);
                                     }}
                                 />
 
@@ -75,6 +78,7 @@ const AddReservation = () => {
                                                     setSelectedDate(date);
                                                     formik.setFieldValue('reserve_date', date.format('YYYY-MM-DD'));
                                                 }}
+                                                className={classes.muiTextFieldInput}
                                             />
                                         </div>
                                     </Col>
@@ -96,6 +100,7 @@ const AddReservation = () => {
                                                     setSelectedTime(newTaskTime);
                                                     formik.setFieldValue('reserve_time', newTaskTime.format('HH:mm'));
                                                 }}
+                                                className={classes.muiTextFieldInput}
                                             />
                                         </div>
                                     </Col>
@@ -120,12 +125,36 @@ const AddReservation = () => {
                                         />
                                     </Col>
                                     <Col md={12} className="mb-2">
+                                        <label htmlFor="">ประเภทงาน</label>
+                                        <select
+                                            name="contact_tel"
+                                            value={formik.values.contact_tel}
+                                            onChange={formik.handleChange}
+                                            className="form-control"
+                                        >
+                                            <option value="">-- เลือกประเภท --</option>
+                                            <option value="1">รับ</option>
+                                            <option value="2">ส่ง</option>
+                                            <option value="3">รับ-ส่ง</option>
+                                        </select>
+                                    </Col>
+                                    <Col md={12} className="mb-2">
                                         <label htmlFor="">จุดหมาย</label>
+                                        <input
+                                            type="text"
+                                            name="destination"
+                                            value={formik.values.destination}
+                                            onChange={formik.handleChange}
+                                            className="form-control"
+                                        />
+                                    </Col>
+                                    <Col md={12} className="mb-2">
+                                        <label htmlFor="">Location</label>
                                         <div className="input-group">
                                             <input
                                                 type="text"
-                                                name="destination"
-                                                value={formik.values.destination}
+                                                name="coordinate"
+                                                value={formik.values.coordinate}
                                                 onChange={formik.handleChange}
                                                 className="form-control"
                                             />
