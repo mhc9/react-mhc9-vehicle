@@ -13,11 +13,12 @@ const DefaultLayout = () => {
             <main className="p-3 min-h-[82vh] border">
                 <Outlet />
             </main>
-            <footer className="border">
+            <footer className="border p-2 bg-[#0A1931]">
                 <div className="flex flex-row">
                     <div className="flex flex-col">
-                        <h3>บริการรถยนต์</h3>
-                        <span>ศูนย์สุขภาพจิตที่ 9</span>
+                        <span className="text-sm text-white">
+                            ©2024 <a href="www.mhc9dmh.com" target="_blank" className="text-blue-400">ศูนย์สุขภาพจิตที่ 9</a> All Rights Reserved
+                        </span>
                     </div>
                 </div>
             </footer>
