@@ -5,10 +5,22 @@ import { DatePicker, TimePicker } from '@material-ui/pickers'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { Formik, Form } from 'formik'
+import * as Yup from 'yup'
 import moment from 'moment'
 import { store, resetSuccess } from '../../features/slices/reservationSlice'
 import { useStyles } from '../../hooks/useStyles'
 import MapSelection from '../../components/MapSelection'
+
+const reservationSchema = Yup.object().shape({
+    reserve_date: Yup.string().required(),
+    reserve_time: Yup.string().required(),
+    type_id: Yup.string().required(),
+    contact_name: Yup.string().required(),
+    contact_tel: Yup.string().required(),
+    destination: Yup.string().required(),
+    coordinate: Yup.string().required(),
+    passengers: Yup.number().min(1).required(),
+});
 
 const AddReservation = () => {
     const classes = useStyles();
@@ -44,7 +56,7 @@ const AddReservation = () => {
                 <Formik
                     initialValues={{
                         reserve_date: moment().format('YYYY-MM-DD'),
-                        reserve_time: moment().format('HH:mm:ss'),
+                        reserve_time: '',
                         type_id: '',
                         contact_name: '',
                         contact_tel: '',
@@ -53,6 +65,7 @@ const AddReservation = () => {
                         passengers: 1,
                         remark: ''
                     }}
+                    validationSchema={reservationSchema}
                     onSubmit={handleSubmit}
                 >
                     {(formik) => {
@@ -80,6 +93,9 @@ const AddReservation = () => {
                                                 }}
                                                 className={classes.muiTextFieldInput}
                                             />
+                                            {(formik.errors.reserve_date && formik.touched.reserve_date) && (
+                                                <span className="text-red-500 text-sm">{formik.errors.reserve_date}</span>
+                                            )}
                                         </div>
                                     </Col>
                                     <Col md={12} className="mb-2">
@@ -102,6 +118,9 @@ const AddReservation = () => {
                                                 }}
                                                 className={classes.muiTextFieldInput}
                                             />
+                                            {(formik.errors.reserve_time && formik.touched.reserve_time) && (
+                                                <span className="text-red-500 text-sm">{formik.errors.reserve_time}</span>
+                                            )}
                                         </div>
                                     </Col>
                                     <Col md={12} className="mb-2">
@@ -113,6 +132,9 @@ const AddReservation = () => {
                                             onChange={formik.handleChange}
                                             className="form-control"
                                         />
+                                        {(formik.errors.contact_name && formik.touched.contact_name) && (
+                                            <span className="text-red-500 text-sm">{formik.errors.contact_name}</span>
+                                        )}
                                     </Col>
                                     <Col md={12} className="mb-2">
                                         <label htmlFor="">เบอร์ติดต่อผู้จอง</label>
@@ -123,6 +145,9 @@ const AddReservation = () => {
                                             onChange={formik.handleChange}
                                             className="form-control"
                                         />
+                                        {(formik.errors.contact_tel && formik.touched.contact_tel) && (
+                                            <span className="text-red-500 text-sm">{formik.errors.contact_tel}</span>
+                                        )}
                                     </Col>
                                     <Col md={12} className="mb-2">
                                         <label htmlFor="">ประเภทงาน</label>
@@ -137,6 +162,9 @@ const AddReservation = () => {
                                             <option value="2">ส่ง</option>
                                             <option value="3">รับ-ส่ง</option>
                                         </select>
+                                        {(formik.errors.contact_tel && formik.touched.contact_tel) && (
+                                            <span className="text-red-500 text-sm">{formik.errors.contact_tel}</span>
+                                        )}
                                     </Col>
                                     <Col md={12} className="mb-2">
                                         <label htmlFor="">จุดหมาย</label>
@@ -147,6 +175,9 @@ const AddReservation = () => {
                                             onChange={formik.handleChange}
                                             className="form-control"
                                         />
+                                        {(formik.errors.destination && formik.touched.destination) && (
+                                            <span className="text-red-500 text-sm">{formik.errors.destination}</span>
+                                        )}
                                     </Col>
                                     <Col md={12} className="mb-2">
                                         <label htmlFor="">Location</label>
@@ -166,17 +197,22 @@ const AddReservation = () => {
                                                 ค้นหา
                                             </button>
                                         </div>
+                                        {(formik.errors.coordinate && formik.touched.coordinate) && (
+                                            <span className="text-red-500 text-sm">{formik.errors.coordinate}</span>
+                                        )}
                                     </Col>
                                     <Col md={12} className="mb-2">
                                         <label htmlFor="">จำนวนผู้โดยสาร</label>
                                         <input
                                             type="number"
-                                            min={1}
                                             name="passengers"
                                             value={formik.values.passengers}
                                             onChange={formik.handleChange}
                                             className="form-control"
                                         />
+                                        {(formik.errors.passengers && formik.touched.passengers) && (
+                                            <span className="text-red-500 text-sm">{formik.errors.passengers}</span>
+                                        )}
                                     </Col>
                                     <Col md={12} className="mb-2">
                                         <label htmlFor="">หมายเหตุ</label>
