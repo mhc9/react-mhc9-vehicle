@@ -40,10 +40,11 @@ const ReservationList = () => {
                     <Col key={reservation.id} md={6} className="md:mb-2 max-sm:mb-2">
                         <div className="app-card border rounded-md p-3">
                             <p className="flex flex-row items-center gap-1">
-                                <FaClock /> {toLongTHDate(moment(reservation.reserve_date).toDate())} {reservation.reserve_time} น.
-                            </p>
-                            <p className="flex flex-row items-center gap-1">
-                                <FaUser /> {reservation.contact_name}
+                                <FaClock />
+                                <span className="ml-1">{toLongTHDate(moment(reservation.reserve_date).toDate())} {reservation.reserve_time} น.</span>
+                                <span className="flex flex-row items-center gap-1 ml-2">
+                                    <FaUser /> <span className="text-blue-700">{reservation.contact_name}</span>
+                                </span>
                             </p>
                             <p className="flex flex-row items-center gap-1">
                                 <FaMapMarkerAlt />
@@ -54,6 +55,15 @@ const ReservationList = () => {
                                 <FaUndoAlt /> {moment(reservation.updated_at).format('YYYY-MM-DD HH:mm')} น.
                             </p>
                         </div>
+                        {reservation.driver && (
+                            <>
+                                <hr />
+
+                                <div>
+                                    {/* driver and vehicle data here... */}
+                                </div>
+                            </>
+                        )}
                     </Col>
                 ))}
             </Row>
