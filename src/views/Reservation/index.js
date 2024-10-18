@@ -46,17 +46,21 @@ const ReservationList = () => {
                                             <FaClock />
                                             <span className="ml-1">{toLongTHDate(moment(reservation.reserve_date).toDate())} {reservation.reserve_time} น.</span>
                                             <span className="flex flex-row items-center gap-1 ml-2">
-                                                <FaUser /> <span className="text-blue-700">{reservation.contact_name}</span>
+                                                <FaUser /> <span className="text-blue-700 font-semibold">{reservation.contact_name}</span>
                                             </span>
                                         </p>
                                         <p className="flex flex-row items-center gap-1">
                                             <FaMapMarkerAlt />
-                                            <span className="text-red-700 ml-1">{reservation.destination}</span>
-                                            <span className="ml-2">จำนวน <b>{reservation.passengers}</b> คน</span>
+                                            <span className={`badge badge-pill ${reservation.type_id === 1 ? 'bg-success' : (reservation.type_id === 2 ? 'bg-primary' : 'bg-warning')} ml-1`}>
+                                                {reservation.type?.name}
+                                            </span>
+                                            <span>{reservation.type_id === 1 ? 'จาก' : 'ที่'}</span>
+                                            <span className="text-red-700">{reservation.destination}</span>
+                                            <span className="ml-1">จำนวน <b>{reservation.passengers}</b> คน</span>
                                         </p>
                                         {reservation.remark && (
-                                            <p className="text-[10px] text-green-700 flex flex-row items-center gap-1 pl-1">
-                                                <FaInfoCircle /> <span className="text-xs font-thin">{reservation.remark}</span>
+                                            <p className="text-xs text-green-700 flex flex-row items-center gap-1 pl-1">
+                                                <FaInfoCircle /> <span className="text-sm font-thin">{reservation.remark}</span>
                                             </p>
                                         )}
                                         <p className="text-[10px] text-gray-400 font-thin flex flex-row items-center gap-1 pl-1">
