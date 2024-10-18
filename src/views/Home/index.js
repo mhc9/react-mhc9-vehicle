@@ -1,8 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getEvents } from '../../features/slices/reservationSlice'
 import Calendar from '../../components/Calendar'
+import Loading from '../../components/Loading'
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const { reservations, isLoading } = useSelector(state => state.reservation);
+    useEffect(() => {
+        dispatch(getEvents({ url: `/api/reservations` }));
+    }, []);
+
     return (
         <div className="p-2">
             <div className="flex flex-row justify-around mb-2">
@@ -12,7 +21,16 @@ const Home = () => {
                 <Link to={'/driver'} className="btn btn-primary">คนขับ</Link>
             </div>
             <div className="pt-4">
-                <Calendar />
+                {isLoading && <div className="text-center"><Loading /></div>}
+                {(!isLoading && reservations) && (
+                    <Calendar events={reservations.map(reservation => {
+                        return {
+                            id: reservation.id,
+                            title: reservation.destination,
+                            start: `${reservation.reserve_date} ${reservation.reserve_time}`
+                        };
+                    })} />
+                )}
             </div>
         </div>
     )

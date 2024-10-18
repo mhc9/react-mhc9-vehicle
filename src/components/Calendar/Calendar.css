@@ -1,0 +1,13 @@
+.fc-toolbar h2 {
+    display: inline;
+    @apply text-xl font-semibold
+}
+
+.fc-button-group > .fc-button {
+    @apply text-sm
+}
+
+.fc-daygrid-day-events,
+.fc-timegrid-event {
+    @apply text-xs font-medium
+}
