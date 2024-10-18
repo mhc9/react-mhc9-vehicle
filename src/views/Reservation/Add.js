@@ -76,7 +76,7 @@ const AddReservation = () => {
                                     hide={() => setShowMap(false)}
                                     onSelect={(coordinate) => {
                                         // formik.setFieldValue("destination", '');
-                                        formik.setFieldValue("coordinate", coordinate);
+                                        formik.setFieldValue("coordinate", `${coordinate.lat}, ${coordinate.lng}`);
                                     }}
                                 />
 
@@ -130,7 +130,7 @@ const AddReservation = () => {
                                             name="contact_name"
                                             value={formik.values.contact_name}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className="form-control text-sm"
                                         />
                                         {(formik.errors.contact_name && formik.touched.contact_name) && (
                                             <span className="text-red-500 text-sm">{formik.errors.contact_name}</span>
@@ -143,7 +143,7 @@ const AddReservation = () => {
                                             name="contact_tel"
                                             value={formik.values.contact_tel}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className="form-control text-sm"
                                         />
                                         {(formik.errors.contact_tel && formik.touched.contact_tel) && (
                                             <span className="text-red-500 text-sm">{formik.errors.contact_tel}</span>
@@ -152,18 +152,18 @@ const AddReservation = () => {
                                     <Col md={12} className="mb-2">
                                         <label htmlFor="">ประเภทงาน</label>
                                         <select
-                                            name="contact_tel"
-                                            value={formik.values.contact_tel}
+                                            name="type_id"
+                                            value={formik.values.type_id}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className="form-control text-sm"
                                         >
                                             <option value="">-- เลือกประเภท --</option>
                                             <option value="1">รับ</option>
                                             <option value="2">ส่ง</option>
                                             <option value="3">รับ-ส่ง</option>
                                         </select>
-                                        {(formik.errors.contact_tel && formik.touched.contact_tel) && (
-                                            <span className="text-red-500 text-sm">{formik.errors.contact_tel}</span>
+                                        {(formik.errors.type_id && formik.touched.type_id) && (
+                                            <span className="text-red-500 text-sm">{formik.errors.type_id}</span>
                                         )}
                                     </Col>
                                     <Col md={12} className="mb-2">
@@ -173,7 +173,7 @@ const AddReservation = () => {
                                             name="destination"
                                             value={formik.values.destination}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className="form-control text-sm"
                                         />
                                         {(formik.errors.destination && formik.touched.destination) && (
                                             <span className="text-red-500 text-sm">{formik.errors.destination}</span>
@@ -182,13 +182,12 @@ const AddReservation = () => {
                                     <Col md={12} className="mb-2">
                                         <label htmlFor="">Location</label>
                                         <div className="input-group">
-                                            <input
-                                                type="text"
+                                            <div
                                                 name="coordinate"
-                                                value={formik.values.coordinate}
-                                                onChange={formik.handleChange}
-                                                className="form-control"
-                                            />
+                                                className="flex items-center form-control text-xs min-h-[34px] bg-gray-100"
+                                            >
+                                                {formik.values.coordinate}
+                                            </div>
                                             <button
                                                 type="button"
                                                 className="btn btn-outline-primary btn-sm"
@@ -208,7 +207,7 @@ const AddReservation = () => {
                                             name="passengers"
                                             value={formik.values.passengers}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className="form-control text-sm"
                                         />
                                         {(formik.errors.passengers && formik.touched.passengers) && (
                                             <span className="text-red-500 text-sm">{formik.errors.passengers}</span>
@@ -221,14 +220,16 @@ const AddReservation = () => {
                                             name="remark"
                                             value={formik.values.remark}
                                             onChange={formik.handleChange}
-                                            className="form-control"
+                                            className="form-control text-sm"
                                         ></textarea>
                                     </Col>
                                 </Row>
-
-                                <button type="submit" className="btn btn-primary">
-                                    จองรถ
-                                </button>
+                                
+                                <Row className="px-[13px]">
+                                    <button type="submit" className="btn btn-primary">
+                                        จองรถ
+                                    </button>
+                                </Row>
                             </Form>
                         )
                     }}

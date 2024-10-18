@@ -28,9 +28,7 @@ const locations = [
 
 const GMAP_API_KEY = process.env.REACT_APP_GMAP_API_KEY;
 
-const GoogleMap = () => {
-    const [place, setPlace] = useState(null);
-
+const GoogleMap = ({ onSelect }) => {
     const getPlaceDetail = async (placeId) => {
         try {
             const res = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?fields=name&place_id=${placeId}&key=${GMAP_API_KEY}`);
@@ -52,7 +50,8 @@ const GoogleMap = () => {
             }
             onClick={(e) => {
                 console.log(e);
-                getPlaceDetail(e.detail.placeId);
+                // getPlaceDetail(e.detail.placeId);
+                onSelect(e.detail.latLng);
             }}
         >
             {/* <PoiMarkers pois={locations} /> */}

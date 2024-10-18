@@ -15,7 +15,7 @@ const MapSelection = ({ isShow, hide, onSelect }) => {
             </Modal.Header>
             <Modal.Body>
                 <div>
-                    <GoogleMap />
+                    <GoogleMap onSelect={(latLng) => onSelect(latLng)} />
                 </div>
             </Modal.Body>
         </Modal>
