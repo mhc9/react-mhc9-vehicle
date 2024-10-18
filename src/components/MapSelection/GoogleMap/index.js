@@ -1,12 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Map } from '@vis.gl/react-google-maps'
 import PoiMarkers from './PoiMarkers'
 import axios from 'axios';
-
-const center = {
-    lat: 14.98341003859137,
-    lng: 102.10487365722656,
-}
 
 const locations = [
     {key: 'operaHouse', location: { lat: -33.8567844, lng: 151.213108  }},
@@ -29,6 +24,25 @@ const locations = [
 const GMAP_API_KEY = process.env.REACT_APP_GMAP_API_KEY;
 
 const GoogleMap = ({ onSelect }) => {
+    const [center, setCenter] = useState({ lat: 14.98341003859137, lng: 102.10487365722656, });
+
+    useEffect(() => {
+        getLocation();
+    }, []);
+
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                console.log(position);
+                setCenter({ lat: position.coords.latitude, lng: position.coords.longitude })
+            }, function(err) {
+                console.log(err);
+            });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    };
+
     const getPlaceDetail = async (placeId) => {
         try {
             const res = await axios.get(`https://maps.googleapis.com/maps/api/place/details/json?fields=name&place_id=${placeId}&key=${GMAP_API_KEY}`);
