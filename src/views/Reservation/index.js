@@ -5,20 +5,23 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUndoAlt } from "react-icons/fa";
 import moment from 'moment'
 import { getReservations } from '../../features/slices/reservationSlice'
-import { toLongTHDate } from '../../utils'
+import { generateQueryString, toLongTHDate } from '../../utils'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
+import FilteringInputs from './FilteringInputs';
 
 const ReservationList = () => {
+    const initialFilters = { date: moment(), limit: 5 }
     const dispatch = useDispatch();
     const { reservations, pager, isLoading } = useSelector(state => state.reservation);
     const [endpoint, setEndpoint] = useState('');
+    const [params, setParams] = useState(generateQueryString({ date: '', limit: 5 }));
 
     useEffect(() => {
         if (endpoint === '') {
-            dispatch(getReservations({ url: `/api/reservations/search?page=` }));
+            dispatch(getReservations({ url: `/api/reservations/search?page=${params}` }));
         } else {
-            dispatch(getReservations({ url: `${endpoint}` }));
+            dispatch(getReservations({ url: `${endpoint}${params}` }));
         }
     }, [endpoint]);
 
@@ -33,6 +36,14 @@ const ReservationList = () => {
                 <h3 className="font-bold text-lg">รายการจอง</h3>
                 <Link to="/reservation/add" className="btn btn-dark">จองรถ</Link>
             </div>
+
+            <FilteringInputs
+                initialFilters={initialFilters}
+                onFilter={(queryStr) => {
+                    setParams(queryStr);
+                    setEndpoint(prev => prev === '' ? `/api/reservations/search?page=` : '');
+                }}
+            />
 
             <Row>
                 {isLoading && <div className="text-center"><Loading /></div>}
@@ -87,6 +98,13 @@ const ReservationList = () => {
                     </Col>
                 ))}
             </Row>
+
+            {pager && (
+                <Pagination
+                    pager={pager}
+                    onPageClick={(url) => setEndpoint(url)}
+                />
+            )}
         </div>
     )
 }
