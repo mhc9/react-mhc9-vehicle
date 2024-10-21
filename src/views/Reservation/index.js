@@ -93,11 +93,11 @@ const ReservationList = () => {
                                 onCancel={() => setToggleAssign('')}
                             />
 
-                            {reservation.driver && (
+                            {reservation.assignments.length > 0 && (
                                 <>
                                     <hr />
 
-                                    <div>
+                                    <div className="border h-5">
                                         {/* driver and vehicle data here... */}
                                     </div>
                                 </>

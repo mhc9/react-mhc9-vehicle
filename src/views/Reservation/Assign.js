@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useDispatch } from 'react-redux';
 import { Col, Row } from 'react-bootstrap';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup'
 import { useGetInitialFormDataQuery } from '../../features/services/reservationApi'
+import { assign } from '../../features/slices/reservationSlice'
 
 const assignSchema = Yup.object().shape({
     driver_id: Yup.string().required(),
@@ -10,8 +12,9 @@ const assignSchema = Yup.object().shape({
 });
 
 const Assign = ({ reservation, isToggle, onCancel }) => {
+    const dispatch = useDispatch();
     const { data: formData, isLoading } = useGetInitialFormDataQuery();
-    
+
     const setDefaultVehicles = (formik, driverId) => {
         const newVehicles = formData && formData.vehicles.filter(vehicle => vehicle.driver_id === parseInt(driverId, 10));
 
@@ -26,7 +29,8 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
     };
 
     const handleSubmit = (data, formik) => {
-        console.log(data);
+        dispatch(assign({ id: reservation.id, data }));
+        onCancel();
     };
 
     return (
@@ -92,8 +96,8 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                                 </Row>
                             </div>
                             <div className="flex justify-end gap-1">
-                                <button className="btn btn-outline-primary btn-sm mr-1" onClick={() => {}}>บันทึก</button>
-                                <button className="btn btn-outline-danger btn-sm" onClick={() => handleCancel(formik)}>ยกเลิก</button>
+                                <button type="submit" className="btn btn-outline-primary btn-sm mr-1" onClick={() => {}}>บันทึก</button>
+                                <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => handleCancel(formik)}>ยกเลิก</button>
                             </div>
                         </Form>
                     )
