@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Modal } from 'react-bootstrap';
-import { FaBus, FaTimesCircle } from "react-icons/fa";
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import { Modal } from 'react-bootstrap';
+import { FaBus, FaTimesCircle, FaTruck, FaInfoCircle } from "react-icons/fa";
+import moment from 'moment';
+import { getDriver } from '../../features/slices/driverSlice'
+import Loading from '../../components/Loading'
 
 const DriverList = ({ assignments }) => {
     return (
@@ -11,7 +13,7 @@ const DriverList = ({ assignments }) => {
 
             <div className="mt-1 flex flex-row items-center">
                 {assignments.map(assignment => (
-                    <DriverBadge driver={assignment.driver} />
+                    <DriverBadge assignedDriver={assignment.driver} />
                 ))}
             </div>
         </div>
@@ -20,8 +22,10 @@ const DriverList = ({ assignments }) => {
 
 export default DriverList
 
-const DriverBadge = ({ driver }) => {
+const DriverBadge = ({ assignedDriver }) => {
     const [showModal, setShowModal] = useState(false);
+    const dispatch = useDispatch();
+    const { driver, isLoading } = useSelector(state => state.driver);
 
     return (
         <>
@@ -29,12 +33,18 @@ const DriverBadge = ({ driver }) => {
                 isShow={showModal}
                 hide={() => setShowModal(false)}
                 driver={driver}
-                date={moment()}
+                isLoading={isLoading}
             />
 
             <span className="flex flex-row items-center gap-2 text-xs badge rounded-pill bg-success">
-                <a href="#" className="flex flex-row items-center gap-1" onClick={() => setShowModal(true)}>
-                    <FaBus /> <span className="font-thin">{driver?.firstname}</span>
+                <a href="#"
+                    className="flex flex-row items-center gap-1"
+                    onClick={() => {
+                        dispatch(getDriver(assignedDriver?.id));
+                        setShowModal(true);
+                    }}
+                >
+                    <FaBus /> <span className="font-thin">{assignedDriver?.firstname}</span>
                 </a>
                 <FaTimesCircle size={'10px'} className="cursor-pointer hover:text-danger" />
             </span>
@@ -42,31 +52,36 @@ const DriverBadge = ({ driver }) => {
     )
 }
 
-const ModalDriverAssignments = ({ isShow, hide, driverId, date }) => {
-    const dispatch = useDispatch();
-    const { driver } = useSelector(state => state.driver);
-
-    useEffect(() => {
-        
-    }, [driverId, date]);
-
+const ModalDriverAssignments = ({ isShow, hide, driver, isLoading }) => {
     return (
         <Modal
             show={isShow}
             onHide={hide}
             size='lg'
         >
-            <Modal.Header closeButton>
-                <Modal.Title></Modal.Title>
+            <Modal.Header closeButton className="py-1">
+                <Modal.Title>{driver?.firstname} {driver?.lastname}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <table className="table table-bordered table-hover table-striped">
-                    {driver && driver.assignments.map(assignment => (
-                        <tr>
-                            <td></td>
-                        </tr>
+                <ul>
+                    {isLoading && <li className="text-center"><Loading /></li>}
+                    {(!isLoading && driver) && driver?.assignments.map(assignment => (
+                        <li className="flex flex-row items-center mb-1 border rounded-full py-1 px-3">
+                            <FaTruck />
+                            <span className="mx-1">{moment(`${assignment.reservation?.reserve_date} ${assignment.reservation?.reserve_time}`).format('HH:mm')} น.</span>
+                            <span className={`badge rounded-pill ${assignment.reservation?.type_id === 1 ? 'bg-success' : (assignment.reservation?.type_id === 2 ? 'bg-primary' : 'bg-dark')} ml-1`}>
+                                {assignment.reservation?.type?.name}
+                            </span>
+                            <span className="mx-1">{assignment.reservation?.type_id === 1 ? 'จาก' : 'ที่'}</span>
+                            <span className="">{assignment.reservation?.destination}</span>
+                            {assignment.reservation?.remark && (
+                                <span className="text-xs text-green-700 flex flex-row items-center gap-1 pl-1">
+                                    <FaInfoCircle /> <span className="text-sm font-thin">{assignment.reservation?.remark}</span>
+                                </span>
+                            )}
+                        </li>
                     ))}
-                </table>
+                </ul>
             </Modal.Body>
         </Modal>
     )

@@ -21,7 +21,7 @@ export const getDrivers = createAsyncThunk("driver/getDrivers", async ({ url }, 
     }
 });
 
-export const getDriver = createAsyncThunk("driver/getDriver", async ({ id }, { rejectWithValue }) => {
+export const getDriver = createAsyncThunk("driver/getDriver", async (id, { rejectWithValue }) => {
     try {
         const res = await api.get(`/api/drivers/${id}`);
 
