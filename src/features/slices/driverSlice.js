@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from '../../api';
 
 const initialState = {
-    asset: null,
-    assets: [],
+    driver: null,
+    drivers: [],
     pager: null,
     isLoading: false,
     isSuccess: false,
@@ -11,7 +11,7 @@ const initialState = {
     error: null
 };
 
-export const getAssets = createAsyncThunk("asset/getAssets", async ({ url }, { rejectWithValue }) => {
+export const getDrivers = createAsyncThunk("driver/getDrivers", async ({ url }, { rejectWithValue }) => {
     try {
         const res = await api.get(url);
 
@@ -21,9 +21,9 @@ export const getAssets = createAsyncThunk("asset/getAssets", async ({ url }, { r
     }
 });
 
-export const getAsset = createAsyncThunk("asset/getAsset", async ({ id }, { rejectWithValue }) => {
+export const getDriver = createAsyncThunk("driver/getDriver", async ({ id }, { rejectWithValue }) => {
     try {
-        const res = await api.get(`/api/assets/${id}`);
+        const res = await api.get(`/api/drivers/${id}`);
 
         return res.data;
     } catch (error) {
@@ -31,9 +31,9 @@ export const getAsset = createAsyncThunk("asset/getAsset", async ({ id }, { reje
     }
 });
 
-export const store = createAsyncThunk("asset/store", async (data, { rejectWithValue }) => {
+export const store = createAsyncThunk("driver/store", async (data, { rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/assets`, data);
+        const res = await api.post(`/api/drivers`, data);
 
         return res.data;
     } catch (error) {
@@ -41,11 +41,11 @@ export const store = createAsyncThunk("asset/store", async (data, { rejectWithVa
     }
 });
 
-export const update = createAsyncThunk("asset/update", async ({ id, data }, { dispatch, rejectWithValue }) => {
+export const update = createAsyncThunk("driver/update", async ({ id, data }, { dispatch, rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/assets/${id}/update`, data);
+        const res = await api.post(`/api/drivers/${id}/update`, data);
 
-        dispatch(getAssets({ url: '/api/assets' }));
+        dispatch(getDrivers({ url: '/api/drivers' }));
 
         return res.data;
     } catch (error) {
@@ -53,11 +53,11 @@ export const update = createAsyncThunk("asset/update", async ({ id, data }, { di
     }
 });
 
-export const destroy = createAsyncThunk("asset/destroy", async ({ id }, { dispatch, rejectWithValue }) => {
+export const destroy = createAsyncThunk("driver/destroy", async ({ id }, { dispatch, rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/assets/${id}/delete`);
+        const res = await api.post(`/api/drivers/${id}/delete`);
 
-        dispatch(getAssets({ url: '/api/assets' }));
+        dispatch(getDrivers({ url: '/api/drivers' }));
 
         return res.data;
     } catch (error) {
@@ -65,9 +65,9 @@ export const destroy = createAsyncThunk("asset/destroy", async ({ id }, { dispat
     }
 });
 
-export const upload = createAsyncThunk("asset/upload", async ({ id, data }, { dispatch, rejectWithValue }) => {
+export const upload = createAsyncThunk("driver/upload", async ({ id, data }, { dispatch, rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/assets/${id}/upload`, data);
+        const res = await api.post(`/api/drivers/${id}/upload`, data);
 
         dispatch(updateImage(res.data?.img_url));
 
@@ -78,7 +78,7 @@ export const upload = createAsyncThunk("asset/upload", async ({ id, data }, { di
 });
 
 export const driverSlice = createSlice({
-    name: 'asset',
+    name: 'driver',
     initialState,
     reducers: {
         resetSuccess: (state) => {
@@ -88,44 +88,41 @@ export const driverSlice = createSlice({
             state.isUploaded = false;
         },
         updateImage: (state, { payload }) => {
-            state.asset = { ...state.asset, img_url: payload };
+            state.driver = { ...state.driver, img_url: payload };
         }
     },
-    // extraReducers: {
-    //     [getAssets.pending]: (state) => {
-    //         state.assets = [];
-    //         state.pager = null;
-    //         state.isLoading = true;
-    //         // state.isSuccess = false;
-    //         state.error = null;
-    //     },
-    //     [getAssets.fulfilled]: (state, { payload }) => {
-    //         const { data, ...pager } = payload;
+    extraReducers: (builder) => {
+        builder
+            .addCase(getDrivers.pending, (state) => {
+                state.drivers = [];
+                state.pager = null;
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(getDrivers.fulfilled, (state, { payload }) => {
+                const { data, ...pager } = payload;
 
-    //         state.assets = data;
-    //         state.pager = pager;
-    //         state.isLoading = false
-    //         // state.isSuccess = true;
-    //     },
-    //     [getAssets.rejected]: (state, { payload }) => {
-    //         state.isLoading = false;
-    //         state.error = payload;
-    //     },
-    //     [getAsset.pending]: (state) => {
-    //         state.asset = null;
-    //         state.isLoading = true;
-    //         // state.isSuccess = false;
-    //         state.error = null;
-    //     },
-    //     [getAsset.fulfilled]: (state, { payload }) => {
-    //         state.asset = payload;
-    //         state.isLoading = false
-    //         // state.isSuccess = true;
-    //     },
-    //     [getAsset.rejected]: (state, { payload }) => {
-    //         state.isLoading = false;
-    //         state.error = payload;
-    //     },
+                state.drivers = data;
+                state.pager = pager;
+                state.isLoading = false;
+            })
+            .addCase(getDrivers.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.error = payload;
+            })
+            .addCase(getDriver.pending, (state) => {
+                state.isLoading = true;
+                state.driver = null;
+                state.error = null;
+            })
+            .addCase(getDriver.fulfilled, (state, { payload }) => {
+                state.isLoading = false;
+                state.driver = payload;
+            })
+            .addCase(getDriver.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.error = payload;
+            })
     //     [store.pending]: (state) => {
     //         state.isLoading = true;
     //         state.isSuccess = false;
@@ -182,7 +179,7 @@ export const driverSlice = createSlice({
     //     [upload.rejected]: (state, { payload }) => {
     //         state.error = payload;
     //     },
-    // }
+    }
 });
 
 export default driverSlice.reducer;
