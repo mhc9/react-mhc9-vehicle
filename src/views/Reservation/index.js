@@ -9,6 +9,7 @@ import { generateQueryString, toLongTHDate } from '../../utils'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
+import Assign from './Assign';
 
 const ReservationList = () => {
     const initialFilters = { date: moment(), limit: 5 }
@@ -16,6 +17,7 @@ const ReservationList = () => {
     const { reservations, pager, isLoading } = useSelector(state => state.reservation);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState(generateQueryString({ date: '', limit: 5 }));
+    const [toggleAssign, setToggleAssign] = useState('');
 
     useEffect(() => {
         if (endpoint === '') {
@@ -79,11 +81,17 @@ const ReservationList = () => {
                                         </p>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <button type="button" className="btn btn-danger">จ่ายงาน</button>
+                                        <button type="button" className="btn btn-danger" onClick={() => setToggleAssign(reservation.id)}>จ่ายงาน</button>
                                         <button type="button" className="btn btn-secondary">ยกเลิก</button>
                                     </div>
                                 </div>
                             </div>
+
+                            <Assign
+                                reservation={reservation}
+                                isToggle={toggleAssign === reservation.id}
+                                onCancel={() => setToggleAssign('')}
+                            />
 
                             {reservation.driver && (
                                 <>

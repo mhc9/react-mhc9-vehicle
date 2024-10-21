@@ -5,13 +5,19 @@ export const reservationApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: process.env.REACT_APP_API_URL,
         prepareHeaders: (headers, { getState }) => {
-            const token = localStorage.getItem("access_token");
+            // const token = localStorage.getItem("access_token");
 
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
+            // if (token) {
+            //     headers.set('Authorization', `Bearer ${token}`);
 
-                return headers;
-            }
+            //     return headers;
+            // }
+
+            // const API_KEY = process.env.REACT_APP_API_KEY;
+
+            headers.set('X-API-KEY', `p2lbgWkFrykA4QyUmpHihzmc5BNzIABq`);
+
+            return headers;
         },
     }),
     endpoints: (builder) => ({
