@@ -10,6 +10,7 @@ import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
 import Assign from './Assign';
+import DriverList from './DriverList';
 
 const ReservationList = () => {
     const initialFilters = { date: moment(), limit: 5 }
@@ -51,7 +52,7 @@ const ReservationList = () => {
                 {isLoading && <div className="text-center"><Loading /></div>}
                 {(!isLoading && reservations) && reservations.map(reservation => (
                     <Col key={reservation.id} md={12} className="md:mb-2 max-sm:mb-2">
-                        <div className="app-card border rounded-md p-3">
+                        <div className="app-card border rounded-md px-3 pt-3 pb-2">
                             <div className="flex flex-col">
                                 <div className="flex flex-row justify-between">
                                     <div>
@@ -81,7 +82,7 @@ const ReservationList = () => {
                                         </p>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <button type="button" className="btn btn-danger" onClick={() => setToggleAssign(reservation.id)}>จ่ายงาน</button>
+                                        {reservation.status === 1 && <button type="button" className="btn btn-danger" onClick={() => setToggleAssign(reservation.id)}>จ่ายงาน</button>}
                                         <button type="button" className="btn btn-secondary">ยกเลิก</button>
                                     </div>
                                 </div>
@@ -94,13 +95,7 @@ const ReservationList = () => {
                             />
 
                             {reservation.assignments.length > 0 && (
-                                <>
-                                    <hr />
-
-                                    <div className="border h-5">
-                                        {/* driver and vehicle data here... */}
-                                    </div>
-                                </>
+                                <DriverList assignments={reservation.assignments} />
                             )}
                         </div>
                     </Col>
