@@ -5,11 +5,13 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-    const token = localStorage.getItem("access_token");
+    // const token = localStorage.getItem("access_token");
 
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
+    // if (token) {
+    //     config.headers.Authorization = `Bearer ${token}`;
+    // }
+
+    config.headers = { 'X-API-KEY': `p2lbgWkFrykA4QyUmpHihzmc5BNzIABq` };
 
     return config;
 }, (error) => Promise.reject(error));
