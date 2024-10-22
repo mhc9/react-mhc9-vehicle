@@ -1,6 +1,12 @@
 .fc-toolbar h2 {
     display: inline;
-    @apply text-xl font-semibold
+    @apply text-lg font-semibold
+}
+
+@media screen and (max-width: 640px) {
+    .fc-toolbar h2 {
+        display: none;
+    }
 }
 
 .fc-button-group > .fc-button {

@@ -7,7 +7,6 @@ import './Calendar.css'
 
 const Calendar = ({ events=[] }) => {
     const calendarRef = useRef(null);
-    console.log(calendarRef.current);
 
     return (
         <FullCalendar
@@ -23,7 +22,7 @@ const Calendar = ({ events=[] }) => {
             slotMinTime="07:00:00"
             slotMaxTime="24:00:00"
             initialEvents={events}
-            height={500}
+            height={'auto'}
         />
     )
 }
