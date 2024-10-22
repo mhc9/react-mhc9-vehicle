@@ -82,7 +82,16 @@ const ReservationList = () => {
                                         </p>
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        {reservation.status === 1 && <button type="button" className="btn btn-danger" onClick={() => setToggleAssign(reservation.id)}>จ่ายงาน</button>}
+                                        {reservation.status === 1 && (
+                                            <button
+                                                type="button"
+                                                className="btn btn-danger"
+                                                onClick={() => setToggleAssign(reservation.id)}
+                                                disabled={toggleAssign === reservation.id}
+                                            >
+                                                    จ่ายงาน
+                                            </button>
+                                        )}
                                         <button type="button" className="btn btn-secondary">ยกเลิก</button>
                                     </div>
                                 </div>
