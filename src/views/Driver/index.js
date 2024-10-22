@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Breadcrumb, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { getVehicles } from '../../features/slices/vehicleSlice'
+import { Breadcrumb, Col, Row } from 'react-bootstrap'
+import { getDrivers } from '../../features/slices/driverSlice'
+import Loading from '../../components/Loading'
+import Pagination from '../../components/Pagination'
 
 const DriverList = () => {
     const dispatch = useDispatch();
-    const { vehicles, pager, isLoading } = useSelector(state => state.vehicle);
+    const { drivers, pager, isLoading } = useSelector(state => state.driver);
     const [endpoint, setEndpoint] = useState('');
 
     useEffect(() => {
         if (endpoint === '') {
-            dispatch(getVehicles({ url: `/api/vehicles/search`}));
+            dispatch(getDrivers({ url: `/api/drivers/search`}));
         } else {
-            dispatch(getVehicles({ url: `${endpoint}`}));
+            dispatch(getDrivers({ url: `${endpoint}`}));
         }
     }, [endpoint]);
 
@@ -27,22 +29,29 @@ const DriverList = () => {
             <h3 className="font-bold text-lg mb-2">คนขับ</h3>
 
             <Row>
-                {isLoading && <div>Loading...</div>}
-                {(!isLoading && vehicles) && vehicles.map(vehicle => (
-                    <Col key={vehicle.id}>
-                        <div className="border rounded-md flex flex-col p-2">
-                            <img src="" alt="" />
-                            <div className="text-center flex flex-col items-center justify-center">
-                                <p className="border rounded-full w-[40px] h-[40px] flex items-center justify-center font-bold">{vehicle.no}</p>
-                                <p className="text-xl font-semibold">{vehicle.type?.name}</p>
-                                <p>{vehicle.owner?.name}</p>
-                                <p className="font-semibold">{vehicle.driver?.firstname} {vehicle.driver?.lastname}</p>
-                                <p>{vehicle.driver?.tel}</p>
+                {isLoading && <div className="text-center"><Loading /></div>}
+                {(!isLoading && drivers) && drivers.map(driver => (
+                    <Col key={driver.id} md={6} lg={4} className="mb-2">
+                        <div className="border rounded-md flex md:flex-col md:justify-center md:items-center gap-3 py-3 px-4">
+                            <div className="w-[80px] h-[80px] border rounded-full overflow-hidden">
+                                <img src="https://cdn4.iconfinder.com/data/icons/taxi-service-flat/90/driver__taxi__cab__avatar_-512.png" alt="driver-pic" className="w-full" />
+                            </div>
+                            <div className="text-center flex flex-col items-start md:items-center justify-center">
+                                <p className="text-xl font-semibold">{driver.firstname} {driver.lastname}</p>
+                                <p className="text-lg">{driver.member_of?.name}</p>
+                                <p>{driver.tel}</p>
                             </div>
                         </div>
                     </Col>
                 )) }
             </Row>
+
+            {pager && (
+                <Pagination
+                    pager={pager}
+                    onPageClick={(url) => setEndpoint(url)}
+                />
+            )}
         </div>
     )
 }
