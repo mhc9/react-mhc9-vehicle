@@ -87,6 +87,8 @@ export const assign = createAsyncThunk("reservation/assign", async ({ id, data }
     try {
         const res = await api.post(`/api/reservations/${id}/assign`, data);
 
+        dispatch(updateReservations(res.data.reservation));
+
         return res.data;
     } catch (error) {
         rejectWithValue(error);
@@ -103,9 +105,18 @@ export const reservationSlice = createSlice({
         resetUploaded: (state) => {
             state.isUploaded = false;
         },
+        updateReservations: (state, { payload }) => {
+            const updatedData = state.reservations.map(reservation => {
+                if (reservation.id === payload.id) return payload;
+
+                return reservation;
+            });
+
+            state.reservations = updatedData;
+        },
         updateImage: (state, { payload }) => {
             state.reservation = { ...state.reservation, img_url: payload };
-        }
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -237,4 +248,4 @@ export const reservationSlice = createSlice({
 
 export default reservationSlice.reducer;
 
-export const { resetSuccess, resetUploaded, updateImage } = reservationSlice.actions;
+export const { resetSuccess, resetUploaded, updateReservations, updateImage } = reservationSlice.actions;
