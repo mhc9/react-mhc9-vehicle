@@ -5,6 +5,7 @@ import { FaBus, FaTimesCircle, FaTruck, FaInfoCircle } from "react-icons/fa";
 import moment from 'moment';
 import { getDriver } from '../../features/slices/driverSlice'
 import Loading from '../../components/Loading'
+import TypeBadge from './TypeBadge'
 
 const DriverList = ({ assignments }) => {
     return (
@@ -69,9 +70,7 @@ const ModalDriverAssignments = ({ isShow, hide, driver, isLoading }) => {
                         <li className="flex flex-row items-center mb-1 border rounded-full py-1 px-3">
                             <FaTruck />
                             <span className="mx-1">{moment(`${assignment.reservation?.reserve_date} ${assignment.reservation?.reserve_time}`).format('HH:mm')} น.</span>
-                            <span className={`badge rounded-pill ${assignment.reservation?.type_id === 1 ? 'bg-success' : (assignment.reservation?.type_id === 2 ? 'bg-primary' : 'bg-dark')} ml-1`}>
-                                {assignment.reservation?.type?.name}
-                            </span>
+                            <TypeBadge type={assignment.reservation?.type} />
                             <span className="mx-1">{assignment.reservation?.type_id === 1 ? 'จาก' : 'ที่'}</span>
                             <span className="">{assignment.reservation?.destination}</span>
                             {assignment.reservation?.remark && (

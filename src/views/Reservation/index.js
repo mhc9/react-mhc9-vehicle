@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Breadcrumb, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUndoAlt } from "react-icons/fa";
+import { toast } from 'react-toastify';
 import moment from 'moment'
 import { getReservations, resetSuccess } from '../../features/slices/reservationSlice'
 import { generateQueryString, toLongTHDate } from '../../utils'
@@ -11,7 +12,7 @@ import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
 import Assign from './Assign';
 import DriverList from './DriverList';
-import { toast } from 'react-toastify';
+import TypeBadge from './TypeBadge'
 
 const ReservationList = () => {
     const initialFilters = { date: moment(), limit: 5 }
@@ -73,9 +74,7 @@ const ReservationList = () => {
                                         </p>
                                         <p className="flex flex-row items-center gap-1">
                                             <FaMapMarkerAlt />
-                                            <span className={`badge badge-pill ${reservation.type_id === 1 ? 'bg-success' : (reservation.type_id === 2 ? 'bg-primary' : 'bg-dark')} ml-1`}>
-                                                {reservation.type?.name}
-                                            </span>
+                                            <TypeBadge type={reservation.type} />
                                             <span>{reservation.type_id === 1 ? 'จาก' : 'ที่'}</span>
                                             <span className="text-red-700">{reservation.destination}</span>
                                             <span className="ml-1">จำนวน <b>{reservation.passengers}</b> คน</span>
