@@ -13,6 +13,7 @@ import FilteringInputs from './FilteringInputs';
 import Assign from './Assign';
 import DriverList from './DriverList';
 import TypeBadge from './TypeBadge'
+import StatusBadge from './StatusBadge';
 
 const ReservationList = () => {
     const initialFilters = { date: moment(), limit: 5 }
@@ -71,6 +72,7 @@ const ReservationList = () => {
                                             <span className="flex flex-row items-center gap-1 ml-2">
                                                 <FaUser /> <span className="text-blue-700 font-semibold">{reservation.contact_name}</span>
                                             </span>
+                                            <StatusBadge status={reservation.status} />
                                         </p>
                                         <p className="flex flex-row items-center gap-1">
                                             <FaMapMarkerAlt />
