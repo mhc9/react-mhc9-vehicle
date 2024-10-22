@@ -17,22 +17,22 @@ const Home = () => {
         <div className="p-2">
             <ul className="nav nav-pills nav-justified">
                 <li className="nav-item">
-                    <Link to={'/reservation/add'} className="nav-link border hover:bg-zinc-200 flex flex-row items-center justify-center gap-1">
+                    <Link to={'/reservation/add'} className="nav-link border hover:bg-zinc-200 flex flex-col md:flex-row items-center justify-center gap-1">
                         <FaAddressCard /> จองรถ
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to={'/reservation'} className="nav-link border hover:bg-zinc-200 flex flex-row items-center justify-center gap-1">
+                    <Link to={'/reservation'} className="nav-link border hover:bg-zinc-200 flex flex-col md:flex-row items-center justify-center gap-1">
                         <FaTasks /> รายการจอง
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to={'/vehicle'} className="nav-link border hover:bg-zinc-200 flex flex-row items-center justify-center gap-1">
+                    <Link to={'/vehicle'} className="nav-link border hover:bg-zinc-200 flex flex-col md:flex-row items-center justify-center gap-1">
                         <FaBus /> รถยนต์
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to={'/driver'} className="nav-link border hover:bg-zinc-200 flex flex-row items-center justify-center gap-1">
+                    <Link to={'/driver'} className="nav-link border hover:bg-zinc-200 flex flex-col md:flex-row items-center justify-center gap-1">
                         <FaUserTie /> คนขับ
                     </Link>
                 </li>
