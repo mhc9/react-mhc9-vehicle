@@ -11,7 +11,7 @@ const DriverList = ({ assignments }) => {
         <div className="mt-2">
             <hr />
 
-            <div className="mt-1 flex flex-row items-center">
+            <div className="mt-1 px-1 flex flex-row items-center">
                 {assignments.map(assignment => (
                     <DriverBadge assignedDriver={assignment.driver} />
                 ))}
