@@ -4,21 +4,29 @@ import { Breadcrumb, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUndoAlt } from "react-icons/fa";
 import moment from 'moment'
-import { getReservations } from '../../features/slices/reservationSlice'
+import { getReservations, resetSuccess } from '../../features/slices/reservationSlice'
 import { generateQueryString, toLongTHDate } from '../../utils'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
 import Assign from './Assign';
 import DriverList from './DriverList';
+import { toast } from 'react-toastify';
 
 const ReservationList = () => {
     const initialFilters = { date: moment(), limit: 5 }
     const dispatch = useDispatch();
-    const { reservations, pager, isLoading } = useSelector(state => state.reservation);
+    const { reservations, pager, isLoading, isSuccess } = useSelector(state => state.reservation);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState(generateQueryString({ date: '', limit: 5 }));
     const [toggleAssign, setToggleAssign] = useState('');
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("บันทึกสำเร็จ!!");
+            dispatch(resetSuccess());
+        }
+    }, [isSuccess]);
 
     useEffect(() => {
         if (endpoint === '') {
