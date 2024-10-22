@@ -53,6 +53,7 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                         reservation_id: reservation ? reservation.id : '',
                         driver_id: '',
                         vehicle_id: '',
+                        remark: '',
                     }}
                     validationSchema={assignSchema}
                     onSubmit={handleSubmit}
@@ -62,7 +63,7 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                             <Form>
                                 <div className="mb-2">
                                     <Row>
-                                        <Col>
+                                        <Col md={6}>
                                             <label htmlFor="">ผู้ขับ :</label>
                                             <select
                                                 name="driver_id"
@@ -73,7 +74,7 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                                                 }}
                                                 className="form-control text-sm"
                                             >
-                                                <option value=""></option>
+                                                <option value="">-- เลือกผู้ขับ --</option>
                                                 {formData && formData.drivers.map(driver => (
                                                     <option value={driver.id} key={driver.id}>
                                                         {driver.firstname} {driver.lastname}
@@ -84,7 +85,7 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                                                 <span className="text-red-500 text-sm">{formik.errors.driver_id}</span>
                                             )}
                                         </Col>
-                                        <Col>
+                                        <Col md={6}>
                                             <label htmlFor="">รถยนต์ :</label>
                                             <select
                                                 name="vehicle_id"
@@ -92,7 +93,7 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                                                 onChange={formik.handleChange}
                                                 className="form-control text-sm"
                                             >
-                                                <option value=""></option>
+                                                <option value="">-- เลือกรถยนต์ --</option>
                                                 {formData && formData.vehicles.map(vehicle => (
                                                     <option value={vehicle.id} key={vehicle.id}>
                                                         {vehicle.reg_no}
@@ -101,6 +102,18 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                                             </select>
                                             {(formik.errors.vehicle_id && formik.touched.vehicle_id) && (
                                                 <span className="text-red-500 text-sm">{formik.errors.vehicle_id}</span>
+                                            )}
+                                        </Col>
+                                        <Col>
+                                            <label htmlFor="">หมายเหตุ :</label>
+                                            <textarea
+                                                name="remark"
+                                                value={formik.values.remark}
+                                                onChange={formik.handleChange}
+                                                className="form-control text-sm"
+                                            ></textarea>
+                                            {(formik.errors.remark && formik.touched.remark) && (
+                                                <span className="text-red-500 text-sm">{formik.errors.remark}</span>
                                             )}
                                         </Col>
                                     </Row>
