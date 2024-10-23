@@ -6,7 +6,7 @@ import { FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUndoAlt } from "react-
 import { toast } from 'react-toastify';
 import moment from 'moment'
 import { getReservations, resetSuccess } from '../../features/slices/reservationSlice'
-import { generateQueryString, toLongTHDate } from '../../utils'
+import { generateQueryString, toLongTHDate, toShortTHDate } from '../../utils'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
@@ -68,7 +68,9 @@ const ReservationList = () => {
                                     <div>
                                         <p className="flex flex-row items-center gap-1">
                                             <FaClock />
-                                            <span className="ml-1">{toLongTHDate(moment(reservation.reserve_date).toDate())} {reservation.reserve_time} น.</span>
+                                            <span className="ml-1 max-sm:hidden">{toLongTHDate(moment(reservation.reserve_date).toDate())}</span>
+                                            <span className="ml-1 hidden max-sm:block">{toShortTHDate(reservation.reserve_date)}</span>
+                                            <span>{moment(`${reservation.reserve_date} ${reservation.reserve_time}`).format('HH:mm')} น.</span>
                                             <span className="flex flex-row items-center gap-1 ml-2">
                                                 <FaUser /> <span className="text-blue-700 font-semibold">{reservation.contact_name}</span>
                                             </span>
