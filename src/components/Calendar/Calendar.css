@@ -7,6 +7,10 @@
     .fc-toolbar h2 {
         display: none;
     }
+
+    .fc-col-header-cell {
+        @apply text-xs
+    }
 }
 
 .fc-button-group > .fc-button {
