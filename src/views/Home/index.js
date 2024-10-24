@@ -16,7 +16,7 @@ const Home = () => {
         <div className="p-2">
             <Navigation />
 
-            <div className="pt-4">
+            <div className="pt-3">
                 {isLoading && <div className="text-center"><Loading /></div>}
                 {(!isLoading && reservations) && (
                     <Calendar events={reservations.map(reservation => {
