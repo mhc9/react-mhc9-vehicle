@@ -95,6 +95,30 @@ export const assign = createAsyncThunk("reservation/assign", async ({ id, data }
     }
 });
 
+export const cancel = createAsyncThunk("reservation/cancel", async ({ id, data }, { dispatch, rejectWithValue }) => {
+    try {
+        const res = await api.post(`/api/reservations/${id}/status`, data);
+
+        dispatch(updateReservations(res.data.reservation));
+
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error);
+    }
+});
+
+export const finish = createAsyncThunk("reservation/finish", async ({ id, data }, { dispatch, rejectWithValue }) => {
+    try {
+        const res = await api.post(`/api/reservations/${id}/status`, data);
+
+        dispatch(updateReservations(res.data.reservation));
+
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error);
+    }
+});
+
 export const reservationSlice = createSlice({
     name: 'reservation',
     initialState,
@@ -241,6 +265,38 @@ export const reservationSlice = createSlice({
             }
         })
         .addCase(assign.rejected, (state, { payload }) => {
+            state.error = payload;
+        })
+        .addCase(cancel.pending, (state) => {
+            state.isSuccess = false;
+            state.error = null;
+        })
+        .addCase(cancel.fulfilled, (state, { payload }) => {
+            const { status, message } = payload;
+            
+            if (status === 1) {
+                state.isSuccess = true;
+            } else {
+                state.error = { message };
+            }
+        })
+        .addCase(cancel.rejected, (state, { payload }) => {
+            state.error = payload;
+        })
+        .addCase(finish.pending, (state) => {
+            state.isSuccess = false;
+            state.error = null;
+        })
+        .addCase(finish.fulfilled, (state, { payload }) => {
+            const { status, message } = payload;
+            
+            if (status === 1) {
+                state.isSuccess = true;
+            } else {
+                state.error = { message };
+            }
+        })
+        .addCase(finish.rejected, (state, { payload }) => {
             state.error = payload;
         })
     }
