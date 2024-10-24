@@ -94,16 +94,22 @@ const ReservationList = () => {
                                     </div>
                                     <div className="flex flex-col gap-1">
                                         {reservation.status === 1 && (
-                                            <button
-                                                type="button"
-                                                className="btn btn-danger"
-                                                onClick={() => setToggleAssign(reservation.id)}
-                                                disabled={toggleAssign === reservation.id}
-                                            >
-                                                    จ่ายงาน
-                                            </button>
+                                            <>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-danger"
+                                                    onClick={() => setToggleAssign(reservation.id)}
+                                                    disabled={toggleAssign === reservation.id}
+                                                >
+                                                        จ่ายงาน
+                                                </button>
+                                                <button type="button" className="btn btn-secondary">ยกเลิก</button>
+                                            </>
                                         )}
-                                        <button type="button" className="btn btn-secondary">ยกเลิก</button>
+
+                                        {reservation.status === 2 && (
+                                            <button type="button" className="btn btn-success">จบงาน</button>
+                                        )}
                                     </div>
                                 </div>
                             </div>
