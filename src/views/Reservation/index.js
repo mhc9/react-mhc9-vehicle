@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUndoAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import moment from 'moment'
-import { getReservations, resetSuccess } from '../../features/slices/reservationSlice'
+import { getReservations, resetSuccess, cancel, finish } from '../../features/slices/reservationSlice'
 import { generateQueryString, toLongTHDate, toShortTHDate } from '../../utils'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
@@ -103,12 +103,32 @@ const ReservationList = () => {
                                                 >
                                                         จ่ายงาน
                                                 </button>
-                                                <button type="button" className="btn btn-secondary">ยกเลิก</button>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-secondary"
+                                                    onClick={() => {
+                                                        if (window.confirm('คุณต้องการยกเลิกรายการใช่หรือไม่?')) {
+                                                            dispatch(cancel({ id: reservation.id, data: { status: 9 } }));
+                                                        }
+                                                    }}
+                                                >
+                                                    ยกเลิก
+                                                </button>
                                             </>
                                         )}
 
                                         {reservation.status === 2 && (
-                                            <button type="button" className="btn btn-success">จบงาน</button>
+                                            <button
+                                                type="button"
+                                                className="btn btn-success"
+                                                onClick={() => {
+                                                    if (window.confirm('คุณต้องการจบงานใช่หรือไม่?')) {
+                                                        dispatch(finish({ id: reservation.id, data: { status: 3 } }));
+                                                    }
+                                                }}
+                                            >
+                                                จบงาน
+                                            </button>
                                         )}
                                     </div>
                                 </div>
