@@ -77,7 +77,7 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                                                 <option value="">-- เลือกผู้ขับ --</option>
                                                 {formData && formData.drivers.map(driver => (
                                                     <option value={driver.id} key={driver.id}>
-                                                        {driver.firstname} {driver.lastname}
+                                                        {driver.firstname} {driver.lastname} ({driver.member_of?.short_name})
                                                     </option>
                                                 ))}
                                             </select>
@@ -96,7 +96,7 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
                                                 <option value="">-- เลือกรถยนต์ --</option>
                                                 {formData && formData.vehicles.map(vehicle => (
                                                     <option value={vehicle.id} key={vehicle.id}>
-                                                        {vehicle.reg_no}
+                                                        {vehicle.type?.name} {vehicle.reg_no} ({vehicle.owner?.short_name})
                                                     </option>
                                                 ))}
                                             </select>
