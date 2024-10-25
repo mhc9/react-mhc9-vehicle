@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { Breadcrumb, Row, Col } from 'react-bootstrap'
 import { DatePicker, TimePicker } from '@material-ui/pickers'
-import { useDispatch, useSelector } from 'react-redux'
+import { FaMapMarkedAlt } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
@@ -167,7 +168,7 @@ const AddReservation = () => {
                                         )}
                                     </Col>
                                     <Col md={12} className="mb-2">
-                                        <label htmlFor="">จุดหมาย</label>
+                                        <label htmlFor="">สถานที่ (ระบุชื่อสถานที่)</label>
                                         <input
                                             type="text"
                                             name="destination"
@@ -180,7 +181,7 @@ const AddReservation = () => {
                                         )}
                                     </Col>
                                     <Col md={12} className="mb-2">
-                                        <label htmlFor="">Location</label>
+                                        <label htmlFor="" className="flex items-center gap-1">Location <FaMapMarkedAlt /></label>
                                         <div className="input-group">
                                             <div
                                                 name="coordinate"
