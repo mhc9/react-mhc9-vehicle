@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Breadcrumb, Col, Row } from 'react-bootstrap'
+import { FaPhoneSquareAlt } from 'react-icons/fa'
 import { getDrivers } from '../../features/slices/driverSlice'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
@@ -39,7 +40,10 @@ const DriverList = () => {
                             <div className="text-center flex flex-col items-start md:items-center justify-center">
                                 <p className="text-xl font-semibold">{driver.firstname} {driver.lastname}</p>
                                 <p className="text-lg">{driver.member_of?.name}</p>
-                                <p>{driver.tel}</p>
+                                <p className="flex items-center gap-1">
+                                    <FaPhoneSquareAlt size={'20px'} />
+                                    <a href={`tel:${driver.tel}`} className="text-lg hover:text-blue-600">{driver.tel}</a>
+                                </p>
                             </div>
                         </div>
                     </Col>

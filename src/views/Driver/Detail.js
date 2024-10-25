@@ -37,7 +37,7 @@ const DriverDetail = () => {
                                 <p className="text-lg">{driver.member_of?.name}</p>
                                 <p className="flex items-center gap-1">
                                     <FaPhoneSquareAlt size={'20px'} />
-                                    <a href={driver.tel} target="_blank" className="text-lg hover:text-blue-600">{driver.tel}</a>
+                                    <a href={`tel:${driver.tel}`} className="text-lg hover:text-blue-600">{driver.tel}</a>
                                 </p>
                             </div>
                         </div>
