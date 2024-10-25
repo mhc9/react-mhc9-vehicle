@@ -12,8 +12,8 @@ import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
 import Assign from './Assign';
 import DriverList from './DriverList';
-import TypeBadge from './TypeBadge'
-import StatusBadge from './StatusBadge';
+import TypeBadge from '../../components/Badges/TypeBadge'
+import StatusBadge from '../../components/Badges/StatusBadge';
 
 const ReservationList = () => {
     const initialFilters = { date: moment(), limit: 5 }

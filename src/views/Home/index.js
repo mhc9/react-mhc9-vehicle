@@ -8,6 +8,8 @@ import { getEvents } from '../../features/slices/reservationSlice'
 import Calendar from '../../components/Calendar'
 import Loading from '../../components/Loading'
 import Navigation from './Navigation'
+import TypeBadge from '../../components/Badges/TypeBadge';
+import StatusBadge from '../../components/Badges/StatusBadge';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -17,6 +19,8 @@ const Home = () => {
 
     useEffect(() => {
         dispatch(getEvents({ url: `/api/reservations` }));
+        setEvent(null);
+        setShowModal(false);
     }, []);
 
     return (
@@ -56,16 +60,14 @@ export default Home
 
 const ModalEvent = ({ isShow, hide, event }) => {
     return (
-        <Modal
-            show={isShow}
-            onHide={hide}
-        >
+        <Modal show={isShow} onHide={hide}>
             <Modal.Header closeButton className="py-1">
                 <Modal.Title>รายละเอียดการจอง</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 {event && (
-                    <div>
+                    <div className="relative">
+                        <span className="absolute top-0 right-0"><StatusBadge status={event.status} /></span>
                         <p className="flex max-[495px]:flex-col items-center max-[495px]:items-start min-[495px]:gap-1">
                             <span className="flex items-center">
                                 <FaClock />
@@ -74,13 +76,12 @@ const ModalEvent = ({ isShow, hide, event }) => {
                             </span>
                             <span className="flex flex-row items-center gap-1 ml-2 max-[495px]:ml-0">
                                 <FaUser /> <span className="text-blue-700 font-semibold">{event.contact_name}</span>
-                                {/* <StatusBadge status={event.status} /> */}
                             </span>
                         </p>
                         <p className="flex max-[495px]:flex-col items-center max-[495px]:items-start min-[495px]:gap-1">
                             <span className="flex flex-row items-center gap-1">
                                 <FaMapMarkerAlt />
-                                {/* <TypeBadge type={event.type} /> */}
+                                <TypeBadge type={event.type} />
                                 <span>{event.type_id === 1 ? 'จาก' : 'ที่'}</span>
                                 <span className="text-red-700">{event.destination}</span>
                             </span>
@@ -91,9 +92,12 @@ const ModalEvent = ({ isShow, hide, event }) => {
                                 <FaInfoCircle /> <span className="text-sm font-thin">{event.remark}</span>
                             </p>
                         )}
-                        <p className="text-[10px] text-gray-400 font-thin flex flex-row items-center gap-1 pl-1">
+
+                        <hr className="mt-2 mb-1" />
+
+                        <div className="text-[10px] text-gray-400 font-thin flex flex-row items-center justify-start gap-1 px-1">
                             <FaUndoAlt /> {moment(event.updated_at).format('YYYY-MM-DD HH:mm')} น.
-                        </p>
+                        </div>
                     </div>
                 )}
             </Modal.Body>
