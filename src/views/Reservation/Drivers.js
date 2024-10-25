@@ -7,21 +7,21 @@ import { getDriver } from '../../features/slices/driverSlice'
 import Loading from '../../components/Loading'
 import TypeBadge from '../../components/Badges/TypeBadge'
 
-const DriverList = ({ assignments }) => {
+const Drivers = ({ assignments }) => {
     return (
         <div className="mt-2">
             <hr />
 
             <div className="mt-1 px-1 flex flex-row items-center">
                 {assignments.map(assignment => (
-                    <DriverBadge assignedDriver={assignment.driver} />
+                    <DriverBadge assignedDriver={assignment.driver} key={assignment.id} />
                 ))}
             </div>
         </div>
     )
 }
 
-export default DriverList
+export default Drivers
 
 const DriverBadge = ({ assignedDriver }) => {
     const [showModal, setShowModal] = useState(false);

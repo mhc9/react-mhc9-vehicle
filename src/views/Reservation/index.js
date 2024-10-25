@@ -11,7 +11,7 @@ import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
 import Assign from './Assign';
-import DriverList from './DriverList';
+import Drivers from './Drivers';
 import TypeBadge from '../../components/Badges/TypeBadge'
 import StatusBadge from '../../components/Badges/StatusBadge';
 
@@ -103,7 +103,7 @@ const ReservationList = () => {
                                         />
 
                                         {reservation.assignments.length > 0 && (
-                                            <DriverList assignments={reservation.assignments} />
+                                            <Drivers assignments={reservation.assignments} />
                                         )}
                                     </div>
                                     <div className="reservation-btn flex flex-col gap-1">
