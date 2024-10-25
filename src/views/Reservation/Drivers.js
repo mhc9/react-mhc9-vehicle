@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { FaBus, FaTimesCircle, FaTruck, FaInfoCircle } from "react-icons/fa";
 import moment from 'moment';
-import { getDriver } from '../../features/slices/driverSlice'
+import { getDriverAssignments } from '../../features/slices/driverSlice'
 import Loading from '../../components/Loading'
 import TypeBadge from '../../components/Badges/TypeBadge'
 
@@ -41,7 +41,7 @@ const DriverBadge = ({ assignedDriver }) => {
                 <a href="#"
                     className="flex flex-row items-center gap-1"
                     onClick={() => {
-                        dispatch(getDriver(assignedDriver?.id));
+                        dispatch(getDriverAssignments({ id: assignedDriver?.id, date: moment().format('YYYY-MM-DD') }));
                         setShowModal(true);
                     }}
                 >
