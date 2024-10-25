@@ -37,7 +37,7 @@ const Assign = ({ reservation, isToggle, onCancel }) => {
         <div 
             className={`
                 ${isToggle
-                    ? 'h-auto opacity-100 py-2 my-2'
+                    ? 'h-auto opacity-100 py-2 mt-2 max-[390px]:mb-0'
                     : 'h-0 overflow-hidden opacity-0'
                 } transition-all duration-500 px-1
             `}

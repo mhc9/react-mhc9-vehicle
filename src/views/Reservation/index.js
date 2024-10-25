@@ -64,23 +64,27 @@ const ReservationList = () => {
                     <Col key={reservation.id} md={12} className="md:mb-2 max-sm:mb-2">
                         <div className="app-card border rounded-md px-3 pt-3 pb-2">
                             <div className="flex flex-col">
-                                <div className="flex flex-row justify-between">
-                                    <div>
-                                        <p className="flex flex-row items-center gap-1">
-                                            <FaClock />
-                                            <span className="ml-1 max-sm:hidden">{toLongTHDate(moment(reservation.reserve_date).toDate())}</span>
-                                            <span className="ml-1 hidden max-sm:block">{toShortTHDate(reservation.reserve_date)}</span>
-                                            <span>{moment(`${reservation.reserve_date} ${reservation.reserve_time}`).format('HH:mm')} น.</span>
-                                            <span className="flex flex-row items-center gap-1 ml-2">
-                                                <FaUser /> <span className="text-blue-700 font-semibold">{reservation.contact_name}</span>
+                                <div className="flex max-[390px]:flex-col justify-between gap-1">
+                                    <div className="reservation-text max-[390px]:mb-1 w-[80%] max-[390px]:w-full lg:w-[90%]">
+                                        <p className="flex max-[495px]:flex-col items-center max-[495px]:items-start min-[495px]:gap-1">
+                                            <span className="flex items-center">
+                                                <FaClock />
+                                                <span className="mx-1 max-sm:hidden">{toLongTHDate(moment(reservation.reserve_date).toDate())}</span>
+                                                <span className="mx-1 hidden max-sm:inline-block">{toShortTHDate(reservation.reserve_date)}</span>
+                                                <span>{moment(`${reservation.reserve_date} ${reservation.reserve_time}`).format('HH:mm')} น.</span>
                                             </span>
-                                            <StatusBadge status={reservation.status} />
+                                            <span className="flex flex-row items-center gap-1 ml-2 max-[495px]:ml-0">
+                                                <FaUser /> <span className="text-blue-700 font-semibold">{reservation.contact_name}</span>
+                                                <StatusBadge status={reservation.status} />
+                                            </span>
                                         </p>
-                                        <p className="flex flex-row items-center gap-1">
-                                            <FaMapMarkerAlt />
-                                            <TypeBadge type={reservation.type} />
-                                            <span>{reservation.type_id === 1 ? 'จาก' : 'ที่'}</span>
-                                            <span className="text-red-700">{reservation.destination}</span>
+                                        <p className="flex max-[495px]:flex-col items-center max-[495px]:items-start min-[495px]:gap-1">
+                                            <span className="flex flex-row items-center gap-1">
+                                                <FaMapMarkerAlt />
+                                                <TypeBadge type={reservation.type} />
+                                                <span>{reservation.type_id === 1 ? 'จาก' : 'ที่'}</span>
+                                                <span className="text-red-700">{reservation.destination}</span>
+                                            </span>
                                             <span className="ml-1">จำนวน <b>{reservation.passengers}</b> คน</span>
                                         </p>
                                         {reservation.remark && (
@@ -91,8 +95,18 @@ const ReservationList = () => {
                                         <p className="text-[10px] text-gray-400 font-thin flex flex-row items-center gap-1 pl-1">
                                             <FaUndoAlt /> {moment(reservation.updated_at).format('YYYY-MM-DD HH:mm')} น.
                                         </p>
+
+                                        <Assign
+                                            reservation={reservation}
+                                            isToggle={toggleAssign === reservation.id}
+                                            onCancel={() => setToggleAssign('')}
+                                        />
+
+                                        {reservation.assignments.length > 0 && (
+                                            <DriverList assignments={reservation.assignments} />
+                                        )}
                                     </div>
-                                    <div className="flex flex-col gap-1">
+                                    <div className="reservation-btn flex flex-col gap-1">
                                         {reservation.status === 1 && (
                                             <>
                                                 <button
@@ -133,16 +147,6 @@ const ReservationList = () => {
                                     </div>
                                 </div>
                             </div>
-
-                            <Assign
-                                reservation={reservation}
-                                isToggle={toggleAssign === reservation.id}
-                                onCancel={() => setToggleAssign('')}
-                            />
-
-                            {reservation.assignments.length > 0 && (
-                                <DriverList assignments={reservation.assignments} />
-                            )}
                         </div>
                     </Col>
                 ))}
