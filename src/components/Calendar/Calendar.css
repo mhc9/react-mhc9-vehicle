@@ -29,3 +29,8 @@
 .fc-timegrid-event {
     @apply text-xs font-medium
 }
+
+.fc-daygrid-event,
+.fc-timegrid-event {
+    cursor: pointer;
+}

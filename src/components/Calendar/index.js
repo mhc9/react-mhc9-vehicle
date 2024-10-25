@@ -5,7 +5,7 @@ import timeGridPlugin  from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import './Calendar.css'
 
-const Calendar = ({ events=[] }) => {
+const Calendar = ({ events=[], onEventClick }) => {
     const calendarRef = useRef(null);
 
     return (
@@ -22,6 +22,7 @@ const Calendar = ({ events=[] }) => {
             slotMinTime="07:00:00"
             slotMaxTime="24:00:00"
             initialEvents={events}
+            eventClick={onEventClick}
             height={'auto'}
         />
     )
