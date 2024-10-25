@@ -31,6 +31,16 @@ export const getDriver = createAsyncThunk("driver/getDriver", async (id, { rejec
     }
 });
 
+export const getDriverAssignments = createAsyncThunk("driver/getDriverAssignments", async (id, { rejectWithValue }) => {
+    try {
+        const res = await api.get(`/api/drivers/${id}`);
+
+        return res.data;
+    } catch (error) {
+        rejectWithValue(error);
+    }
+});
+
 export const store = createAsyncThunk("driver/store", async (data, { rejectWithValue }) => {
     try {
         const res = await api.post(`/api/drivers`, data);
@@ -120,6 +130,19 @@ export const driverSlice = createSlice({
                 state.driver = payload;
             })
             .addCase(getDriver.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.error = payload;
+            })
+            .addCase(getDriverAssignments.pending, (state) => {
+                state.isLoading = true;
+                state.driver = null;
+                state.error = null;
+            })
+            .addCase(getDriverAssignments.fulfilled, (state, { payload }) => {
+                state.isLoading = false;
+                state.driver = payload;
+            })
+            .addCase(getDriverAssignments.rejected, (state, { payload }) => {
                 state.isLoading = false;
                 state.error = payload;
             })
