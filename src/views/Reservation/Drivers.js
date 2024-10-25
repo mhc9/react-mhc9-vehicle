@@ -67,7 +67,7 @@ const ModalDriverAssignments = ({ isShow, hide, driver, isLoading }) => {
                 <ul>
                     {isLoading && <li className="text-center"><Loading /></li>}
                     {(!isLoading && driver) && driver?.assignments.map(assignment => (
-                        <li className="flex flex-row items-center mb-1 border rounded-full py-1 px-3">
+                        <li className="flex flex-row items-center mb-1 border rounded-full py-1 px-3" key={assignment.id}>
                             <FaTruck />
                             <span className="mx-1">{moment(`${assignment.reservation?.reserve_date} ${assignment.reservation?.reserve_time}`).format('HH:mm')} น.</span>
                             <TypeBadge type={assignment.reservation?.type} />
