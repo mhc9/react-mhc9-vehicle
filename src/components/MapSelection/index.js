@@ -15,7 +15,12 @@ const MapSelection = ({ isShow, hide, onSelect }) => {
             </Modal.Header>
             <Modal.Body>
                 <div>
-                    <GoogleMap onSelect={(latLng) => onSelect(latLng)} />
+                    <GoogleMap
+                        onSelect={(latLng) => {
+                            onSelect(latLng);
+                            setTimeout(() => hide(), 1000);
+                        }}
+                    />
                 </div>
             </Modal.Body>
         </Modal>
