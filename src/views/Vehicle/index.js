@@ -32,7 +32,10 @@ const VehicleList = () => {
                 {isLoading && <div className="text-center"><Loading /></div>}
                 {(!isLoading && vehicles) && vehicles.map(vehicle => (
                     <Col key={vehicle.id} md={6} lg={4} className="mb-2">
-                        <div className="border rounded-md flex md:flex-col items-center p-2">
+                        <div className="border rounded-md flex md:flex-col items-center p-2 relative">
+                            <span className="border rounded-full w-[50px] h-[50px] flex items-center justify-center text-3xl font-bold text-white bg-black mb-2 max-md:hidden absolute top-1 left-1">
+                                {vehicle.no}
+                            </span>
                             <p className="border rounded-full w-[50px] h-[50px] flex items-center justify-center text-3xl font-bold text-white bg-black mr-1 md:hidden">
                                 {vehicle.no}
                             </p>
@@ -52,13 +55,14 @@ const VehicleList = () => {
                                 />
                             </div>
                             <div className="text-center flex flex-col items-center justify-center ml-8 md:ml-0">
-                                <p className="border rounded-full w-[50px] h-[50px] flex items-center justify-center text-3xl font-bold text-white bg-black mb-2 max-md:hidden">
-                                    {vehicle.no}
+                                <p className="text-xl font-semibold">
+                                    {vehicle.type?.name}
+                                    <span className="ml-2">{vehicle.reg_no}</span>
                                 </p>
-                                <p className="text-xl font-semibold">{vehicle.type?.name}</p>
                                 <p>{vehicle.owner?.name}</p>
-                                <p className="font-semibold">{vehicle.driver?.firstname} {vehicle.driver?.lastname}</p>
-                                <p>{vehicle.driver?.tel}</p>
+                                <p className="font-semibold hover:text-blue-600">
+                                    <Link to={`/driver/${vehicle.driver?.id}`}>{vehicle.driver?.firstname} {vehicle.driver?.lastname}</Link>
+                                </p>
                             </div>
                         </div>
                     </Col>
