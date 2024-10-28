@@ -40,10 +40,12 @@ const ReservationList = () => {
 
     return (
         <div>
-            <Breadcrumb>
-                <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>หน้าหลัก</Breadcrumb.Item>
-                <Breadcrumb.Item active>รายการจอง</Breadcrumb.Item>
-            </Breadcrumb>
+            <div className="hidden min-[490px]:block">
+                <Breadcrumb>
+                    <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>หน้าหลัก</Breadcrumb.Item>
+                    <Breadcrumb.Item active>รายการจอง</Breadcrumb.Item>
+                </Breadcrumb>
+            </div>
 
             <div className="flex flex-row items-end justify-between mb-3">
                 <h3 className="font-bold text-lg">รายการจอง</h3>

@@ -21,10 +21,12 @@ const VehicleList = () => {
 
     return (
         <div>
-            <Breadcrumb>
-                <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>หน้าหลัก</Breadcrumb.Item>
-                <Breadcrumb.Item active>รถยนต์</Breadcrumb.Item>
-            </Breadcrumb>
+            <div className="hidden min-[490px]:block">
+                <Breadcrumb>
+                    <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>หน้าหลัก</Breadcrumb.Item>
+                    <Breadcrumb.Item active>รถยนต์</Breadcrumb.Item>
+                </Breadcrumb>
+            </div>
 
             <h3 className="font-bold text-lg mb-2">รถยนต์</h3>
 
