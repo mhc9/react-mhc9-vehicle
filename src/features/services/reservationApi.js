@@ -13,9 +13,10 @@ export const reservationApi = createApi({
             //     return headers;
             // }
 
-            // const API_KEY = process.env.REACT_APP_API_KEY;
+            /** Use API Key */
+            const API_KEY = process.env.REACT_APP_API_KEY;
 
-            headers.set('X-API-KEY', `p2lbgWkFrykA4QyUmpHihzmc5BNzIABq`);
+            headers.set('X-API-KEY', API_KEY);
 
             return headers;
         },

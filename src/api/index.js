@@ -11,7 +11,10 @@ api.interceptors.request.use((config) => {
     //     config.headers.Authorization = `Bearer ${token}`;
     // }
 
-    config.headers = { 'X-API-KEY': `p2lbgWkFrykA4QyUmpHihzmc5BNzIABq` };
+    /** Use API Key */
+    const API_KEY = process.env.REACT_APP_API_KEY;
+
+    config.headers = { 'X-API-KEY': API_KEY };
 
     return config;
 }, (error) => Promise.reject(error));
