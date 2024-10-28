@@ -20,7 +20,7 @@ const ReservationList = () => {
     const dispatch = useDispatch();
     const { reservations, pager, isLoading, isSuccess } = useSelector(state => state.reservation);
     const [endpoint, setEndpoint] = useState('');
-    const [params, setParams] = useState(generateQueryString({ date: '', limit: 5 }));
+    const [params, setParams] = useState(generateQueryString({ date: moment().format('YYYY-MM-DD'), limit: 5 }));
     const [toggleAssign, setToggleAssign] = useState('');
 
     useEffect(() => {
