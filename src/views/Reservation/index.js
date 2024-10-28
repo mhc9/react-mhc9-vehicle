@@ -65,7 +65,7 @@ const ReservationList = () => {
                         <div className="app-card border rounded-md px-3 pt-3 pb-2">
                             <div className="flex flex-col">
                                 <div className="flex max-[390px]:flex-col justify-between gap-1">
-                                    <div className="reservation-text max-[390px]:mb-1 w-[80%] max-[390px]:w-full lg:w-[90%]">
+                                    <div className={`reservation-text max-[390px]:mb-1 max-[390px]:w-full lg:w-[90%] ${[3,9].includes(reservation.status) ? 'w-full' : 'w-[80%]'}`}>
                                         <p className="flex max-[495px]:flex-col items-center max-[495px]:items-start min-[495px]:gap-1">
                                             <span className="flex items-center">
                                                 <FaClock />
@@ -109,7 +109,7 @@ const ReservationList = () => {
                                             />
                                         )}
                                     </div>
-                                    <div className="reservation-btn flex flex-col gap-1">
+                                    <div className={`reservation-btn flex flex-col gap-1 ${[3,9].includes(reservation.status) && 'hidden'}`}>
                                         {reservation.status === 1 && (
                                             <>
                                                 <button
