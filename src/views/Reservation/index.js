@@ -103,7 +103,10 @@ const ReservationList = () => {
                                         />
 
                                         {reservation.assignments.length > 0 && (
-                                            <Drivers assignments={reservation.assignments} />
+                                            <Drivers
+                                                assignments={reservation.assignments}
+                                                reserveDate={reservation.reserve_date}
+                                            />
                                         )}
                                     </div>
                                     <div className="reservation-btn flex flex-col gap-1">
