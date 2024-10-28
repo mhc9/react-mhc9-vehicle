@@ -31,9 +31,9 @@ export const getDriver = createAsyncThunk("driver/getDriver", async (id, { rejec
     }
 });
 
-export const getDriverAssignments = createAsyncThunk("driver/getDriverAssignments", async (id, { rejectWithValue }) => {
+export const getDriverAssignments = createAsyncThunk("driver/getDriverAssignments", async ({ id, date }, { rejectWithValue }) => {
     try {
-        const res = await api.get(`/api/drivers/${id}`);
+        const res = await api.get(`/api/drivers/${id}/assignments/${date}`);
 
         return res.data;
     } catch (error) {
