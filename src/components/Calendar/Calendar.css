@@ -2,6 +2,10 @@
     margin-bottom: 1em;
 }
 
+.fc .fc-button-primary {
+    background-color: var(--bs-success);
+}
+
 .fc-toolbar h2 {
     display: inline;
     @apply text-lg font-semibold

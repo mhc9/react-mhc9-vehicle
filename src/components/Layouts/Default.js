@@ -22,7 +22,7 @@ const DefaultLayout = () => {
             <main className="p-3 min-h-[90vh] bg-white">
                 <Outlet />
             </main>
-            <footer className="border p-2 bg-[#0A1931]">
+            <footer className="border p-2 bg-[#1a252f]">
                 <div className="flex flex-row">
                     <div className="flex flex-col">
                         <span className="text-sm text-white">
