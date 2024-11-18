@@ -2,8 +2,8 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from '../../api';
 
 const initialState = {
-    assigment: null,
-    assigments: [],
+    assignment: null,
+    assignments: [],
     pager: null,
     isLoading: false,
     isSuccess: false,
@@ -11,7 +11,7 @@ const initialState = {
     error: null
 };
 
-export const getAssignments = createAsyncThunk("assigment/getAssignments", async ({ url }, { rejectWithValue }) => {
+export const getAssignments = createAsyncThunk("assignment/getAssignments", async ({ url }, { rejectWithValue }) => {
     try {
         const res = await api.get(url);
 
@@ -21,9 +21,9 @@ export const getAssignments = createAsyncThunk("assigment/getAssignments", async
     }
 });
 
-export const getAssignment = createAsyncThunk("assigment/getAssignment", async ({ id }, { rejectWithValue }) => {
+export const getAssignment = createAsyncThunk("assignment/getAssignment", async ({ id }, { rejectWithValue }) => {
     try {
-        const res = await api.get(`/api/reservation-assigments/${id}`);
+        const res = await api.get(`/api/reservation-assignments/${id}`);
 
         return res.data;
     } catch (error) {
@@ -31,7 +31,7 @@ export const getAssignment = createAsyncThunk("assigment/getAssignment", async (
     }
 });
 
-export const store = createAsyncThunk("assigment/store", async (data, { rejectWithValue }) => {
+export const store = createAsyncThunk("assignment/store", async (data, { rejectWithValue }) => {
     try {
         const res = await api.post(`/api/reservations`, data);
 
@@ -41,9 +41,9 @@ export const store = createAsyncThunk("assigment/store", async (data, { rejectWi
     }
 });
 
-export const update = createAsyncThunk("assigment/update", async ({ id, data }, { dispatch, rejectWithValue }) => {
+export const update = createAsyncThunk("assignment/update", async ({ id, data }, { dispatch, rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/reservation-assigments/${id}/update`, data);
+        const res = await api.post(`/api/reservation-assignments/${id}/update`, data);
 
         return res.data;
     } catch (error) {
@@ -51,9 +51,9 @@ export const update = createAsyncThunk("assigment/update", async ({ id, data }, 
     }
 });
 
-export const destroy = createAsyncThunk("assigment/destroy", async ({ id }, { dispatch, rejectWithValue }) => {
+export const destroy = createAsyncThunk("assignment/destroy", async ({ id }, { dispatch, rejectWithValue }) => {
     try {
-        const res = await api.post(`/api/reservation-assigments/${id}/delete`);
+        const res = await api.post(`/api/reservation-assignments/${id}/delete`);
 
         return res.data;
     } catch (error) {
@@ -75,7 +75,7 @@ export const assignmentSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getAssignments.pending, (state) => {
-                state.assigments = [];
+                state.assignments = [];
                 state.pager = null;
                 state.isLoading = true;
                 state.error = null;
@@ -83,7 +83,7 @@ export const assignmentSlice = createSlice({
             .addCase(getAssignments.fulfilled, (state, { payload }) => {
                 const { data, ...pager } = payload;
 
-                state.assigments = data;
+                state.assignments = data;
                 state.pager = pager;
                 state.isLoading = false
             })
@@ -92,13 +92,13 @@ export const assignmentSlice = createSlice({
                 state.error = payload;
             })
     //     [getAssignment.pending, (state) => {
-    //         state.assigment = null;
+    //         state.assignment = null;
     //         state.isLoading = true;
     //         // state.isSuccess = false;
     //         state.error = null;
     //     },
     //     [getAssignment.fulfilled, (state, { payload }) => {
-    //         state.assigment = payload;
+    //         state.assignment = payload;
     //         state.isLoading = false
     //         // state.isSuccess = true;
     //     },
@@ -108,15 +108,15 @@ export const assignmentSlice = createSlice({
     //     },
         .addCase(store.pending, (state) => {
             state.isSuccess = false;
-            state.assigment = null;
+            state.assignment = null;
             state.error = null;
         })
         .addCase(store.fulfilled, (state, { payload }) => {
-            const { status, message, assigment } = payload;
+            const { status, message, assignment } = payload;
             
             if (status === 1) {
                 state.isSuccess = true;
-                state.assigment = assigment;
+                state.assignment = assignment;
             } else {
                 state.error = { message };
             }
@@ -126,15 +126,15 @@ export const assignmentSlice = createSlice({
         })
         .addCase(update.pending, (state) => {
             state.isSuccess = false;
-            state.assigment = null;
+            state.assignment = null;
             state.error = null;
         })
         .addCase(update.fulfilled, (state, { payload }) => {
-            const { status, message, assigment } = payload;
+            const { status, message, assignment } = payload;
             
             if (status === 1) {
                 state.isSuccess = true;
-                state.assigment = assigment;
+                state.assignment = assignment;
             } else {
                 state.error = { message };
             }

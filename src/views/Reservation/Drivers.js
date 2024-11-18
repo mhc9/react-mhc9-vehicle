@@ -13,6 +13,7 @@ const Drivers = ({ assignments, reserveDate }) => {
     const { driver, isLoading } = useSelector(state => state.driver);
     const [showModal, setShowModal] = useState(false);
     const [showChangeModal, setShowChagneModal] = useState(false);
+    const [assigmentToCahnge, setAssignmentToCahnge] = useState(null);
 
     return (
         <div>
@@ -27,6 +28,7 @@ const Drivers = ({ assignments, reserveDate }) => {
                 isShow={showChangeModal}
                 hide={() => setShowChagneModal(false)}
                 date={reserveDate}
+                assignment={assigmentToCahnge}
             />
 
             <div className="mt-1 px-1 flex flex-row items-center gap-1">
@@ -38,7 +40,10 @@ const Drivers = ({ assignments, reserveDate }) => {
                             dispatch(getDriverAssignments({ id: driverId, date: reserveDate }));
                             setShowModal(true);
                         }}
-                        onChangeDriver={() => setShowChagneModal(true)}
+                        onChangeDriver={() => {
+                            setAssignmentToCahnge(assignment);
+                            setShowChagneModal(true);
+                        }}
                     />
                 ))}
             </div>

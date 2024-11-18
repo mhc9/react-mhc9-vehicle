@@ -1,8 +1,10 @@
 import React from 'react'
-import * as Yup from 'yup'
-import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 import { Col, Modal, Row } from 'react-bootstrap';
+import { Formik } from 'formik';
+import * as Yup from 'yup'
 import { useGetInitialFormDataQuery } from '../../features/services/reservationApi'
+import { update } from '../../features/slices/assignmentSlice'
 
 const assignSchema = Yup.object().shape({
     driver_id: Yup.string().required('กรุณาเลือกผู้ขับรถก่อน'),
@@ -10,6 +12,7 @@ const assignSchema = Yup.object().shape({
 });
 
 const ChangeDriver = ({ isShow, hide, date, assignment }) => {
+    const dispatch = useDispatch();
     const { data: formData } = useGetInitialFormDataQuery({ date });
 
     const setDefaultVehicles = (formik, driverId) => {
@@ -21,8 +24,11 @@ const ChangeDriver = ({ isShow, hide, date, assignment }) => {
     };
 
     const handleSubmit = (data, formik) => {
-
+        if (window.confirm("คุณต้องการเปลี่ยนผู้ขับใช่หรือไม่?")) {
+            dispatch(update({ id: assignment.id, data }));
+        }
     };
+    
 
     return (
         <Modal show={isShow} onHide={hide}>
@@ -33,10 +39,11 @@ const ChangeDriver = ({ isShow, hide, date, assignment }) => {
                 <Formik
                     enableReinitialize
                     initialValues={{
+                        assignment_id: assignment ? assignment.id : '',
                         reservation_id: assignment ? assignment.reservation_id : '',
-                        driver_id: '',
-                        vehicle_id: '',
-                        remark: '',
+                        driver_id: assignment ? assignment.driver_id : '',
+                        vehicle_id: assignment ? assignment.vehicle_id : '',
+                        remark: assignment ? assignment.remark : '',
                     }}
                     validationSchema={assignSchema}
                     onSubmit={handleSubmit}
