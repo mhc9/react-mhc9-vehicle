@@ -23,9 +23,14 @@ export const reservationApi = createApi({
     }),
     endpoints: (builder) => ({
         getInitialFormData: builder.query({
-            query: () => ({
-                url: '/api/reservations/init/form'
-            }),
+            query: (args) => {
+                const { date } = args;
+
+                return {
+                    url: '/api/reservations/init/form',
+                    params: { date }
+                }
+            },
         }),
     }),
 });
