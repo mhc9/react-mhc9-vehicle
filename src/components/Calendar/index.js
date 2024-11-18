@@ -19,7 +19,7 @@ const Calendar = ({ events=[], onEventClick }) => {
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             }}
-            slotMinTime="07:00:00"
+            slotMinTime="05:00:00"
             slotMaxTime="24:00:00"
             initialEvents={events}
             eventClick={onEventClick}
