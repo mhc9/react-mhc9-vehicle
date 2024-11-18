@@ -23,7 +23,7 @@ const Drivers = ({ assignments, reserveDate }) => {
                 isLoading={isLoading}
             />
 
-            <div className="mt-1 px-1 flex flex-row items-center">
+            <div className="mt-1 px-1 flex flex-row items-center gap-1">
                 {assignments.map(assignment => (
                     <DriverBadge
                         key={assignment.id}
