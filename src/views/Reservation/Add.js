@@ -21,6 +21,7 @@ const reservationSchema = Yup.object().shape({
     destination: Yup.string().required(),
     coordinate: Yup.string().required(),
     passengers: Yup.number().min(1).required(),
+    vehicles: Yup.number().min(1).required(),
 });
 
 const AddReservation = () => {
@@ -66,6 +67,7 @@ const AddReservation = () => {
                         destination: '',
                         coordinate: '',
                         passengers: 1,
+                        vehicles: 1,
                         remark: ''
                     }}
                     validationSchema={reservationSchema}
@@ -214,6 +216,19 @@ const AddReservation = () => {
                                         />
                                         {(formik.errors.passengers && formik.touched.passengers) && (
                                             <span className="text-red-500 text-sm">{formik.errors.passengers}</span>
+                                        )}
+                                    </Col>
+                                    <Col md={12} className="mb-2">
+                                        <label htmlFor="">จำนวนรถ</label>
+                                        <input
+                                            type="number"
+                                            name="vehicles"
+                                            value={formik.values.vehicles}
+                                            onChange={formik.handleChange}
+                                            className="form-control text-sm"
+                                        />
+                                        {(formik.errors.vehicles && formik.touched.vehicles) && (
+                                            <span className="text-red-500 text-sm">{formik.errors.vehicles}</span>
                                         )}
                                     </Col>
                                     <Col md={12} className="mb-2">
