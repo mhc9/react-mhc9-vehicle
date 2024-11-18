@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Breadcrumb, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUndoAlt } from "react-icons/fa";
+import { FaBus, FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUsers, FaUndoAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import moment from 'moment'
 import { getReservations, resetSuccess, cancel, finish } from '../../features/slices/reservationSlice'
@@ -87,7 +87,10 @@ const ReservationList = () => {
                                                 <span>{reservation.type_id === 1 ? 'จาก' : 'ที่'}</span>
                                                 <span className="text-red-700">{reservation.destination}</span>
                                             </span>
-                                            <span className="ml-1">จำนวน <b>{reservation.passengers}</b> คน</span>
+                                        </p>
+                                        <p className="flex flex-row items-center gap-2">
+                                            <span className="flex flex-row items-center gap-1"><FaUsers />ผู้โดยสาร <b>{reservation.passengers}</b> คน</span>
+                                            <span className="flex flex-row items-center gap-1 ml-1"><FaBus />ขอรถ <b>{reservation.vehicles}</b> คัน</span>
                                         </p>
                                         {reservation.remark && (
                                             <p className="text-xs text-green-700 flex flex-row items-center gap-1 pl-1">
