@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { assign } from '../../../features/slices/reservationSlice'
 import Assign from './Assign';
 
-const Assignment = ({ reservation, isToggle, onSubmit, onCancel }) => {
+const Assignment = ({ reservation, date, isToggle, onCancel }) => {
     const dispatch = useDispatch();
 
     const handleCancel = (formik) => {
@@ -48,6 +48,7 @@ const Assignment = ({ reservation, isToggle, onSubmit, onCancel }) => {
 
                                         <Assign
                                             reservation={reservation}
+                                            date={date}
                                             onSubmit={(assignment) => {
                                                 formik.setFieldValue('assignments', [...formik.values.assignments, assignment]);
 

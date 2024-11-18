@@ -9,8 +9,8 @@ const assignSchema = Yup.object().shape({
     vehicle_id: Yup.string().required('กรุณาเลือกรถก่อน'),
 });
 
-const Assign = ({ reservation, onSubmit }) => {
-    const { data: formData, isLoading } = useGetInitialFormDataQuery();
+const Assign = ({ reservation, date, onSubmit }) => {
+    const { data: formData, isLoading } = useGetInitialFormDataQuery({ date });
 
     const setDefaultVehicles = (formik, driverId) => {
         const newVehicles = formData && formData.vehicles.filter(vehicle => vehicle.driver_id === parseInt(driverId, 10));

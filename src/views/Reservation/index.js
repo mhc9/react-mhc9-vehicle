@@ -6,7 +6,7 @@ import { FaBus, FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUsers, FaUndoAl
 import { toast } from 'react-toastify';
 import moment from 'moment'
 import { getReservations, resetSuccess, cancel, finish } from '../../features/slices/reservationSlice'
-import { generateQueryString, toLongTHDate, toShortTHDate } from '../../utils'
+import { generateQueryString, getUrlParam, toLongTHDate, toShortTHDate } from '../../utils'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
@@ -151,6 +151,7 @@ const ReservationList = () => {
 
                                 <Assignment
                                     reservation={reservation}
+                                    date={getUrlParam(params, 'date')}
                                     isToggle={toggleAssign === reservation.id}
                                     onCancel={() => setToggleAssign('')}
                                 />
