@@ -1,5 +1,6 @@
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import authReducer from "./slices/authSlice";
+import assignmentReducer from './slices/assignmentSlice'
 import reservationReducer from "./slices/reservationSlice";
 import vehicleReducer from "./slices/vehicleSlice";
 import driverReducer from "./slices/driverSlice";
@@ -20,6 +21,7 @@ export default configureStore({
         [driverApi.reducerPath]: driverApi.reducer,
         // [userApi.reducerPath]: userApi.reducer,
         auth: authReducer,
+        assignment: assignmentReducer,
         reservation: reservationReducer,
         vehicle: vehicleReducer,
         driver: driverReducer,
