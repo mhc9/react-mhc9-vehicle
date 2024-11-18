@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUndoAlt } from "react-icons/fa";
+import { FaBus, FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUsers, FaUndoAlt } from "react-icons/fa";
 import { Modal } from 'react-bootstrap'
 import moment from 'moment'
 import { toLongTHDate } from '../../utils'
@@ -66,7 +66,7 @@ const ModalEvent = ({ isShow, hide, event }) => {
             </Modal.Header>
             <Modal.Body>
                 {event && (
-                    <div className="relative">
+                    <div className="relative leading-6">
                         <span className="absolute top-0 right-0"><StatusBadge status={event.status} /></span>
                         <p className="flex max-[495px]:flex-col items-center max-[495px]:items-start min-[495px]:gap-1">
                             <span className="flex items-center">
@@ -85,7 +85,10 @@ const ModalEvent = ({ isShow, hide, event }) => {
                                 <span>{event.type_id === 1 ? 'จาก' : 'ที่'}</span>
                                 <span className="text-red-700">{event.destination}</span>
                             </span>
-                            <span className="ml-1">จำนวน <b>{event.passengers}</b> คน</span>
+                        </p>
+                        <p className="flex flex-row items-center gap-2">
+                            <span className="flex flex-row items-center gap-1"><FaUsers />ผู้โดยสาร <b>{event.passengers}</b> คน</span>
+                            <span className="flex flex-row items-center gap-1 ml-1"><FaBus />ขอรถ <b>{event.vehicles}</b> คัน</span>
                         </p>
                         {event.remark && (
                             <p className="text-xs text-green-700 flex flex-row items-center gap-1 pl-1">
