@@ -10,7 +10,7 @@ import { generateQueryString, toLongTHDate, toShortTHDate } from '../../utils'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
 import FilteringInputs from './FilteringInputs';
-import Assign from './Assign';
+import Assignment from './Assignment';
 import Drivers from './Drivers';
 import TypeBadge from '../../components/Badges/TypeBadge'
 import StatusBadge from '../../components/Badges/StatusBadge';
@@ -101,12 +101,6 @@ const ReservationList = () => {
                                             <FaUndoAlt /> {moment(reservation.updated_at).format('YYYY-MM-DD HH:mm')} น.
                                         </p>
 
-                                        <Assign
-                                            reservation={reservation}
-                                            isToggle={toggleAssign === reservation.id}
-                                            onCancel={() => setToggleAssign('')}
-                                        />
-
                                         {reservation.assignments.length > 0 && (
                                             <Drivers
                                                 assignments={reservation.assignments}
@@ -134,7 +128,7 @@ const ReservationList = () => {
                                                         }
                                                     }}
                                                 >
-                                                    ยกเลิก
+                                                    ลบ
                                                 </button>
                                             </>
                                         )}
@@ -154,6 +148,12 @@ const ReservationList = () => {
                                         )}
                                     </div>
                                 </div>
+
+                                <Assignment
+                                    reservation={reservation}
+                                    isToggle={toggleAssign === reservation.id}
+                                    onCancel={() => setToggleAssign('')}
+                                />
                             </div>
                         </div>
                     </Col>
