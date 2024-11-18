@@ -28,8 +28,6 @@ const Assignment = ({ reservation, date, isToggle, onCancel }) => {
             onSubmit={handleSubmit}
         >
             {(formik) => {
-                console.log(formik.values);
-                
                 return (
                     <Form>
                         <div 
@@ -68,7 +66,7 @@ const Assignment = ({ reservation, date, isToggle, onCancel }) => {
                                 >
                                     บันทึกจ่ายงาน
                                 </button>
-                                <button className="btn btn-danger btn-sm" onClick={() => onCancel()}>
+                                <button className="btn btn-danger btn-sm" onClick={() => handleCancel(formik)}>
                                     ยกเลิก
                                 </button>
                             </div>
