@@ -13,9 +13,7 @@ const Drivers = ({ assignments, reserveDate }) => {
     const [showModal, setShowModal] = useState(false);
 
     return (
-        <div className="mt-2">
-            <hr />
-
+        <div>
             <ModalDriverAssignments
                 isShow={showModal}
                 hide={() => setShowModal(false)}

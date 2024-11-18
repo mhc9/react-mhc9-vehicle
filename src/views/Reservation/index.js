@@ -97,15 +97,19 @@ const ReservationList = () => {
                                                 <FaInfoCircle /> <span className="text-sm font-thin">{reservation.remark}</span>
                                             </p>
                                         )}
-                                        <p className="text-[10px] text-gray-400 font-thin flex flex-row items-center gap-1 pl-1">
+                                        <p className="text-[10px] text-gray-400 font-thin flex flex-row items-center gap-1 pl-1 mt-1">
                                             <FaUndoAlt /> {moment(reservation.updated_at).format('YYYY-MM-DD HH:mm')} น.
                                         </p>
 
                                         {reservation.assignments.length > 0 && (
-                                            <Drivers
-                                                assignments={reservation.assignments}
-                                                reserveDate={reservation.reserve_date}
-                                            />
+                                            <div className="mt-2">
+                                                <hr />
+
+                                                <Drivers
+                                                    assignments={reservation.assignments}
+                                                    reserveDate={reservation.reserve_date}
+                                                />
+                                            </div>
                                         )}
                                     </div>
                                     <div className={`reservation-btn flex flex-col gap-1 ${[3,9].includes(reservation.status) && 'hidden'}`}>

@@ -10,6 +10,7 @@ import Loading from '../../components/Loading'
 import Navigation from './Navigation'
 import TypeBadge from '../../components/Badges/TypeBadge';
 import StatusBadge from '../../components/Badges/StatusBadge';
+import Drivers from '../Reservation/Drivers';
 
 const Home = () => {
     const dispatch = useDispatch();
@@ -94,6 +95,13 @@ const ModalEvent = ({ isShow, hide, event }) => {
                             <p className="text-xs text-green-700 flex flex-row items-center gap-1 pl-1">
                                 <FaInfoCircle /> <span className="text-sm font-thin">{event.remark}</span>
                             </p>
+                        )}
+
+                        {event.assignments.length > 0 && (
+                            <Drivers
+                                assignments={event.assignments}
+                                reserveDate={event.reserve_date}
+                            />
                         )}
 
                         <hr className="mt-2 mb-1" />
