@@ -42,10 +42,14 @@ const DriverList = () => {
                             <div className="text-center flex flex-col items-start md:items-center justify-center">
                                 <p className="text-xl font-semibold">{driver.firstname} {driver.lastname}</p>
                                 <p className="text-lg">{driver.member_of?.name}</p>
-                                <p className="flex items-center gap-1">
+                                <p className="flex items-center gap-1 mb-2">
                                     <FaPhoneSquareAlt size={'20px'} />
                                     <a href={`tel:${driver.tel}`} className="text-lg hover:text-blue-600">{driver.tel}</a>
                                 </p>
+
+                                <Link to={`/driver/${driver.id}/assignments`} className="btn btn-outline-primary">
+                                    รายการขับรถ
+                                </Link>
                             </div>
                         </div>
                     </Col>

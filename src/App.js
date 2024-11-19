@@ -7,6 +7,7 @@ import ReservationList from './views/Reservation'
 import VehicleList from './views/Vehicle'
 import DriverList from './views/Driver'
 import DriverDetail from "./views/Driver/Detail";
+import DriverAssignmentList from "./views/Driver/AssignmentList";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                 <Route path="/vehicle" element={<VehicleList />} />
                 <Route path="/driver" element={<DriverList />} />
                 <Route path="/driver/:id" element={<DriverDetail />} />
+                <Route path="/driver/:id/assignments" element={<DriverAssignmentList />} />
             </Route>
             <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
