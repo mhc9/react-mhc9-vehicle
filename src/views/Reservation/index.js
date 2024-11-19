@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FaBus, FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUsers, FaUndoAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import moment from 'moment'
-import { getReservations, resetSuccess, cancel, finish } from '../../features/slices/reservationSlice'
+import { getReservations, resetSuccess, cancel, finish, updateAssignments } from '../../features/slices/reservationSlice'
+import { resetSuccess as changeSuccess } from '../../features/slices/assignmentSlice'
 import { generateQueryString, getUrlParam, toLongTHDate, toShortTHDate } from '../../utils'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/Pagination'
@@ -19,6 +20,7 @@ const ReservationList = () => {
     const initialFilters = { date: moment(), limit: 5 }
     const dispatch = useDispatch();
     const { reservations, pager, isLoading, isSuccess } = useSelector(state => state.reservation);
+    const { assignment, isSuccess: isChangeSuccess } = useSelector(state => state.assignment);
     const [endpoint, setEndpoint] = useState('');
     const [params, setParams] = useState(generateQueryString({ date: moment().format('YYYY-MM-DD'), limit: 5 }));
     const [toggleAssign, setToggleAssign] = useState('');
@@ -29,6 +31,14 @@ const ReservationList = () => {
             dispatch(resetSuccess());
         }
     }, [isSuccess]);
+
+    useEffect(() => {
+        if (isChangeSuccess) {
+            toast.success("เปลี่ยนผู้ขับสำเร็จ!!");
+            dispatch(changeSuccess());
+            dispatch(updateAssignments({ id: assignment.reservation_id, assignment }));
+        }
+    }, [isChangeSuccess]);
 
     useEffect(() => {
         if (endpoint === '') {

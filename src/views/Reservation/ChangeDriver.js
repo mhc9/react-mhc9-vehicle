@@ -1,28 +1,19 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Modal, Row } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup'
 import { useGetInitialFormDataQuery } from '../../features/services/reservationApi'
-import { update, resetSuccess } from '../../features/slices/assignmentSlice'
-import { toast } from 'react-toastify';
+import { update } from '../../features/slices/assignmentSlice'
 
 const assignSchema = Yup.object().shape({
     driver_id: Yup.string().required('กรุณาเลือกผู้ขับรถก่อน'),
     vehicle_id: Yup.string().required('กรุณาเลือกรถก่อน'),
 });
 
-const ChangeDriver = ({ isShow, hide, date, assignment }) => {
+const ChangeDriver = ({ isShow, hide, date, data }) => {
     const dispatch = useDispatch();
-    const { isSuccess } = useSelector(state => state.assignment);
     const { data: formData } = useGetInitialFormDataQuery({ date });
-
-    useEffect(() => {
-        if (isSuccess) {
-            toast.success("เปลี่ยนผู้ขับสำเร็จ!!");
-            dispatch(resetSuccess());
-        }
-    }, [isSuccess]);
 
     const setDefaultVehicles = (formik, driverId) => {
         const newVehicles = formData && formData.vehicles.filter(vehicle => vehicle.driver_id === parseInt(driverId, 10));
@@ -32,12 +23,12 @@ const ChangeDriver = ({ isShow, hide, date, assignment }) => {
         }
     };
 
-    const handleSubmit = (data, formik) => {
+    const handleSubmit = (values, formik) => {
         if (window.confirm("คุณต้องการเปลี่ยนผู้ขับใช่หรือไม่?")) {
-            dispatch(update({ id: assignment.id, data }));
+            dispatch(update({ id: data.id, data: values }));
+            hide();
         }
     };
-    
 
     return (
         <Modal show={isShow} onHide={hide}>
@@ -48,11 +39,11 @@ const ChangeDriver = ({ isShow, hide, date, assignment }) => {
                 <Formik
                     enableReinitialize
                     initialValues={{
-                        assignment_id: assignment ? assignment.id : '',
-                        reservation_id: assignment ? assignment.reservation_id : '',
-                        driver_id: assignment ? assignment.driver_id : '',
-                        vehicle_id: assignment ? assignment.vehicle_id : '',
-                        remark: (assignment && assignment.remark) ? assignment.remark : '',
+                        assignment_id: data ? data.id : '',
+                        reservation_id: data ? data.reservation_id : '',
+                        driver_id: data ? data.driver_id : '',
+                        vehicle_id: data ? data.vehicle_id : '',
+                        remark: (data && data.remark) ? data.remark : '',
                     }}
                     validationSchema={assignSchema}
                     onSubmit={handleSubmit}

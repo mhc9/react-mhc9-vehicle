@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Modal } from 'react-bootstrap';
 import { FaBus, FaRandom, FaTruck, FaInfoCircle } from "react-icons/fa";
@@ -28,7 +28,7 @@ const Drivers = ({ assignments, reserveDate }) => {
                 isShow={showChangeModal}
                 hide={() => setShowChagneModal(false)}
                 date={reserveDate}
-                assignment={assigmentToCahnge}
+                data={assigmentToCahnge}
             />
 
             <div className="mt-1 px-1 flex flex-row items-center gap-1">
