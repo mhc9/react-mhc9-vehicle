@@ -60,7 +60,7 @@ const DriverBadge = ({ assignedDriver, onClickBadge, onChangeDriver }) => {
                 className="flex flex-row items-center gap-1"
                 onClick={() => onClickBadge(assignedDriver?.id)}
             >
-                <FaBus /> <span className="font-thin">{assignedDriver?.firstname}</span>
+                <FaBus /> <span className="font-thin">{assignedDriver.nickname} ({assignedDriver.member_of?.short_name})</span>
             </a>
             <FaRandom size={'10px'} className="cursor-pointer hover:text-danger" onClick={onChangeDriver} />
         </span>
