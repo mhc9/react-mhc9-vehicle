@@ -1,10 +1,11 @@
-import React from 'react'
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Col, Modal, Row } from 'react-bootstrap';
 import { Formik } from 'formik';
 import * as Yup from 'yup'
 import { useGetInitialFormDataQuery } from '../../features/services/reservationApi'
-import { update } from '../../features/slices/assignmentSlice'
+import { update, resetSuccess } from '../../features/slices/assignmentSlice'
+import { toast } from 'react-toastify';
 
 const assignSchema = Yup.object().shape({
     driver_id: Yup.string().required('กรุณาเลือกผู้ขับรถก่อน'),
@@ -13,7 +14,15 @@ const assignSchema = Yup.object().shape({
 
 const ChangeDriver = ({ isShow, hide, date, assignment }) => {
     const dispatch = useDispatch();
+    const { isSuccess } = useSelector(state => state.assignment);
     const { data: formData } = useGetInitialFormDataQuery({ date });
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success("เปลี่ยนผู้ขับสำเร็จ!!");
+            dispatch(resetSuccess());
+        }
+    }, [isSuccess]);
 
     const setDefaultVehicles = (formik, driverId) => {
         const newVehicles = formData && formData.vehicles.filter(vehicle => vehicle.driver_id === parseInt(driverId, 10));
@@ -43,7 +52,7 @@ const ChangeDriver = ({ isShow, hide, date, assignment }) => {
                         reservation_id: assignment ? assignment.reservation_id : '',
                         driver_id: assignment ? assignment.driver_id : '',
                         vehicle_id: assignment ? assignment.vehicle_id : '',
-                        remark: assignment ? assignment.remark : '',
+                        remark: (assignment && assignment.remark) ? assignment.remark : '',
                     }}
                     validationSchema={assignSchema}
                     onSubmit={handleSubmit}
