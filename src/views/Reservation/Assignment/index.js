@@ -35,14 +35,14 @@ const Assignment = ({ reservation, date, isToggle, onCancel }) => {
                                 ${isToggle
                                     ? 'h-auto opacity-100 max-[390px]:mb-0'
                                     : 'h-0 overflow-hidden opacity-0'
-                                } transition-all duration-500 px-1
+                                } transition-all duration-500 mt-2 px-2 border-t max-lg:rounded-md
                             `}
                         >
-                            <h3 className="text-lg font-bold mb-1">จ่ายงาน</h3>
+                            <h3 className="text-lg font-bold mt-1 underline">จ่ายงาน</h3>
                             {Array(reservation.vehicles).fill(0).map((vehicle, index) => (
                                 <Fragment key={index}>
-                                    <div className="px-2">
-                                        <h3 className="font-bold underline">คันที่ {index+1}</h3>
+                                    <div className="px-2 flex flex-row items-center gap-2">
+                                        <h3 className="font-bold w-[8%] max-lg:w-[10%]">คันที่ {index+1}.</h3>
 
                                         <Assign
                                             reservation={reservation}

@@ -25,7 +25,7 @@ const Assign = ({ reservation, date, onSubmit }) => {
     };
 
     return (
-        <div className="mb-2">
+        <div className="mb-2 w-full">
             <Formik
                 enableReinitialize
                 initialValues={{
@@ -40,7 +40,7 @@ const Assign = ({ reservation, date, onSubmit }) => {
                 {(formik) => {
                     return (
                         <Row>
-                            <Col md={3} className="pr-1">
+                            <Col md={3} className="lg:pr-1">
                                 <label htmlFor="">ผู้ขับ :</label>
                                 <select
                                     name="driver_id"
@@ -62,7 +62,7 @@ const Assign = ({ reservation, date, onSubmit }) => {
                                     <span className="text-red-500 text-sm">{formik.errors.driver_id}</span>
                                 )}
                             </Col>
-                            <Col md={3} className="px-1">
+                            <Col md={3} className="lg:px-1">
                                 <label htmlFor="">รถยนต์ :</label>
                                 <select
                                     name="vehicle_id"
@@ -81,7 +81,7 @@ const Assign = ({ reservation, date, onSubmit }) => {
                                     <span className="text-red-500 text-sm">{formik.errors.vehicle_id}</span>
                                 )}
                             </Col>
-                            <Col md={5} className="px-1">
+                            <Col md={5} className="lg:px-1">
                                 <label htmlFor="">หมายเหตุ :</label>
                                 <textarea
                                     rows={1}
@@ -94,10 +94,10 @@ const Assign = ({ reservation, date, onSubmit }) => {
                                     <span className="text-red-500 text-sm">{formik.errors.remark}</span>
                                 )}
                             </Col>
-                            <Col md={1} className="pl-1 pt-4">
+                            <Col md={1} className="lg:pl-1 flex flex-col justify-end max-lg:mt-1">
                                 <button
                                     type="button"
-                                    className="btn btn-outline-primary btn-sm mr-1"
+                                    className="btn btn-outline-primary text-sm mr-1"
                                     onClick={formik.submitForm}
                                     disabled={formik.isSubmitting}
                                 >
