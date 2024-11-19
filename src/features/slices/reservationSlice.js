@@ -138,6 +138,31 @@ export const reservationSlice = createSlice({
 
             state.reservations = updatedData;
         },
+        updateAssignments: (state, { payload }) => {
+            const { id, assignment } = payload;
+
+            /** ดึงข้อมูล assignments จาก reservations */
+            const assignments = state.reservations.find(res => res.id === id)?.assignments;
+
+            /** อัพเดตข้อมูล assignments */
+            let updatedAssignments = [];
+            if (assignments.length > 0) {
+                updatedAssignments = assignments.map(ass => {
+                    if (ass.id === assignment.id) return assignment;
+                    
+                    return ass;
+                });
+            }
+
+            /** อัพเดตข้อมูล reservations */
+            const updatedData = state.reservations.map(reservation => {
+                if (reservation.id === id) return ({ ...reservation, assignments: updatedAssignments });
+
+                return reservation;
+            });
+
+            state.reservations = updatedData;
+        },
         updateImage: (state, { payload }) => {
             state.reservation = { ...state.reservation, img_url: payload };
         },
@@ -304,4 +329,4 @@ export const reservationSlice = createSlice({
 
 export default reservationSlice.reducer;
 
-export const { resetSuccess, resetUploaded, updateReservations, updateImage } = reservationSlice.actions;
+export const { resetSuccess, resetUploaded, updateReservations, updateAssignments, updateImage } = reservationSlice.actions;
