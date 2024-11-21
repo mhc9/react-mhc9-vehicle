@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Breadcrumb, Col, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { FaBus, FaClock, FaInfoCircle, FaMapMarkerAlt, FaUser, FaUsers, FaUndoAlt } from "react-icons/fa";
+import { FaBus, FaClock, FaEdit, FaInfoCircle, FaMapMarkerAlt, FaRegTrashAlt, FaUser, FaUsers, FaUndoAlt } from "react-icons/fa";
 import { toast } from 'react-toastify';
 import moment from 'moment'
 import { getReservations, resetSuccess, cancel, finish, updateAssignments } from '../../features/slices/reservationSlice'
@@ -125,6 +125,30 @@ const ReservationList = () => {
                                     <div className={`reservation-btn flex flex-col gap-1 ${[3,9].includes(reservation.status) && 'hidden'}`}>
                                         {reservation.status === 1 && (
                                             <>
+                                                <div className="flex flex-row items-center justify-end gap-2 mb-2">
+                                                    <Link
+                                                        to={`/reservation/${reservation.id}/edit`}
+                                                        className="btn text-warning px-1"
+                                                        onClick={() => {
+                                                            if (window.confirm('คุณต้องการยกเลิกรายการใช่หรือไม่?')) {
+                                                                dispatch(cancel({ id: reservation.id, data: { status: 9 } }));
+                                                            }
+                                                        }}
+                                                    >
+                                                        <FaEdit />
+                                                    </Link>
+                                                    <a
+                                                        href="#"
+                                                        className="btn text-danger px-1"
+                                                        onClick={() => {
+                                                            if (window.confirm('คุณต้องการยกเลิกรายการใช่หรือไม่?')) {
+                                                                dispatch(cancel({ id: reservation.id, data: { status: 9 } }));
+                                                            }
+                                                        }}
+                                                    >
+                                                        <FaRegTrashAlt />
+                                                    </a>
+                                                </div>
                                                 <button
                                                     type="button"
                                                     className="btn btn-danger"
@@ -132,17 +156,6 @@ const ReservationList = () => {
                                                     disabled={toggleAssign === reservation.id}
                                                 >
                                                         จ่ายงาน
-                                                </button>
-                                                <button
-                                                    type="button"
-                                                    className="btn btn-secondary"
-                                                    onClick={() => {
-                                                        if (window.confirm('คุณต้องการยกเลิกรายการใช่หรือไม่?')) {
-                                                            dispatch(cancel({ id: reservation.id, data: { status: 9 } }));
-                                                        }
-                                                    }}
-                                                >
-                                                    ลบ
                                                 </button>
                                             </>
                                         )}
