@@ -21,7 +21,7 @@ export const getReservations = createAsyncThunk("reservation/getReservations", a
     }
 });
 
-export const getReservation = createAsyncThunk("reservation/getReservation", async ({ id }, { rejectWithValue }) => {
+export const getReservation = createAsyncThunk("reservation/getReservation", async (id, { rejectWithValue }) => {
     try {
         const res = await api.get(`/api/reservations/${id}`);
 
@@ -61,7 +61,7 @@ export const update = createAsyncThunk("reservation/update", async ({ id, data }
     }
 });
 
-export const destroy = createAsyncThunk("reservation/destroy", async ({ id }, { dispatch, rejectWithValue }) => {
+export const destroy = createAsyncThunk("reservation/destroy", async (id, { dispatch, rejectWithValue }) => {
     try {
         const res = await api.post(`/api/reservations/${id}/delete`);
 
@@ -186,144 +186,145 @@ export const reservationSlice = createSlice({
                 state.isLoading = false;
                 state.error = payload;
             })
-    //     [getReservation.pending, (state) => {
-    //         state.reservation = null;
-    //         state.isLoading = true;
-    //         // state.isSuccess = false;
-    //         state.error = null;
-    //     },
-    //     [getReservation.fulfilled, (state, { payload }) => {
-    //         state.reservation = payload;
-    //         state.isLoading = false
-    //         // state.isSuccess = true;
-    //     },
-    //     [getReservation.rejected, (state, { payload }) => {
-    //         state.isLoading = false;
-    //         state.error = payload;
-    //     },
-    
-        .addCase(getEvents.pending, (state) => {
-            state.reservations = [];
-            state.isLoading = true;
-            state.error = null;
-        })
-        .addCase(getEvents.fulfilled, (state, { payload }) => {
-            state.reservations = payload;
-            state.isLoading = false
-        })
-        .addCase(getEvents.rejected, (state, { payload }) => {
-            state.isLoading = false;
-            state.error = payload;
-        })
-        .addCase(store.pending, (state) => {
-            state.isSuccess = false;
-            state.error = null;
-        })
-        .addCase(store.fulfilled, (state, { payload }) => {
-            const { status, message, reservation } = payload;
-            
-            if (status === 1) {
-                state.isSuccess = true;
-                state.reservation = reservation;
-            } else {
-                state.error = { message };
-            }
-        })
-        .addCase(store.rejected, (state, { payload }) => {
-            state.error = payload;
-        })
-    //     [update.pending, (state) => {
-    //         state.isLoading = true;
-    //         state.isSuccess = false;
-    //         state.error = null;
-    //     },
-    //     [update.fulfilled, (state, { payload }) => {
-    //         state.isLoading = false
-    //         state.isSuccess = true;
-    //     },
-    //     [update.rejected, (state, { payload }) => {
-    //         state.isLoading = false;
-    //         state.error = payload;
-    //     },
-    //     [destroy.pending, (state) => {
-    //         state.isLoading = true;
-    //         state.isSuccess = false;
-    //         state.error = null;
-    //     },
-    //     [destroy.fulfilled, (state, { payload }) => {
-    //         state.isLoading = false
-    //         state.isSuccess = true;
-    //     },
-    //     [destroy.rejected, (state, { payload }) => {
-    //         state.isLoading = false;
-    //         state.error = payload;
-    //     },
-    //     [upload.pending, (state) => {
-    //         state.isUploaded = false;
-    //         state.error = null;
-    //     },
-    //     [upload.fulfilled, (state, { payload }) => {
-    //         const { status, message } = payload;
+            .addCase(getReservation.pending, (state) => {
+                state.reservation = null;
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(getReservation.fulfilled, (state, { payload }) => {
+                state.reservation = payload;
+                state.isLoading = false;
+            })
+            .addCase(getReservation.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.error = payload;
+            })
+            .addCase(getEvents.pending, (state) => {
+                state.reservations = [];
+                state.isLoading = true;
+                state.error = null;
+            })
+            .addCase(getEvents.fulfilled, (state, { payload }) => {
+                state.reservations = payload;
+                state.isLoading = false
+            })
+            .addCase(getEvents.rejected, (state, { payload }) => {
+                state.isLoading = false;
+                state.error = payload;
+            })
+            .addCase(store.pending, (state) => {
+                state.isSuccess = false;
+                state.error = null;
+            })
+            .addCase(store.fulfilled, (state, { payload }) => {
+                const { status, message, reservation } = payload;
+                
+                if (status === 1) {
+                    state.isSuccess = true;
+                    state.reservation = reservation;
+                } else {
+                    state.error = { message };
+                }
+            })
+            .addCase(store.rejected, (state, { payload }) => {
+                state.error = payload;
+            })
+            .addCase(update.pending, (state) => {
+                state.isSuccess = false;
+                state.error = null;
+            })
+            .addCase(update.fulfilled, (state, { payload }) => {
+                const { status, message, reservation } = payload;
 
-    //         if (status === 1) {
-    //             state.isUploaded = true;
-    //         } else {
-    //             state.isUploaded = false;
-    //             state.error = { message };
-    //         }
-    //     },
-    //     [upload.rejected, (state, { payload }) => {
-    //         state.error = payload;
-    //     },
-        .addCase(assign.pending, (state) => {
-            state.isSuccess = false;
-            state.error = null;
-        })
-        .addCase(assign.fulfilled, (state, { payload }) => {
-            const { status, message, reservation } = payload;
-            
-            if (status === 1) {
-                state.isSuccess = true;
-                state.reservation = reservation;
-            } else {
-                state.error = { message };
-            }
-        })
-        .addCase(assign.rejected, (state, { payload }) => {
-            state.error = payload;
-        })
-        .addCase(cancel.pending, (state) => {
-            state.isSuccess = false;
-            state.error = null;
-        })
-        .addCase(cancel.fulfilled, (state, { payload }) => {
-            const { status, message } = payload;
-            
-            if (status === 1) {
-                state.isSuccess = true;
-            } else {
-                state.error = { message };
-            }
-        })
-        .addCase(cancel.rejected, (state, { payload }) => {
-            state.error = payload;
-        })
-        .addCase(finish.pending, (state) => {
-            state.isSuccess = false;
-            state.error = null;
-        })
-        .addCase(finish.fulfilled, (state, { payload }) => {
-            const { status, message } = payload;
-            
-            if (status === 1) {
-                state.isSuccess = true;
-            } else {
-                state.error = { message };
-            }
-        })
-        .addCase(finish.rejected, (state, { payload }) => {
-            state.error = payload;
-        })
+                if (status === 1) {
+                    state.isSuccess = true;
+                    state.reservation = reservation;
+                } else {
+                    state.error = { message };
+                }
+            })
+            .addCase(update.rejected, (state, { payload }) => {
+                state.error = payload;
+            })
+        //     [destroy.pending, (state) => {
+        //         state.isLoading = true;
+        //         state.isSuccess = false;
+        //         state.error = null;
+        //     },
+        //     [destroy.fulfilled, (state, { payload }) => {
+        //         state.isLoading = false
+        //         state.isSuccess = true;
+        //     },
+        //     [destroy.rejected, (state, { payload }) => {
+        //         state.isLoading = false;
+        //         state.error = payload;
+        //     },
+        //     [upload.pending, (state) => {
+        //         state.isUploaded = false;
+        //         state.error = null;
+        //     },
+        //     [upload.fulfilled, (state, { payload }) => {
+        //         const { status, message } = payload;
+
+        //         if (status === 1) {
+        //             state.isUploaded = true;
+        //         } else {
+        //             state.isUploaded = false;
+        //             state.error = { message };
+        //         }
+        //     },
+        //     [upload.rejected, (state, { payload }) => {
+        //         state.error = payload;
+        //     },
+            .addCase(assign.pending, (state) => {
+                state.isSuccess = false;
+                state.error = null;
+            })
+            .addCase(assign.fulfilled, (state, { payload }) => {
+                const { status, message, reservation } = payload;
+                
+                if (status === 1) {
+                    state.isSuccess = true;
+                    state.reservation = reservation;
+                } else {
+                    state.error = { message };
+                }
+            })
+            .addCase(assign.rejected, (state, { payload }) => {
+                state.error = payload;
+            })
+            .addCase(cancel.pending, (state) => {
+                state.isSuccess = false;
+                state.error = null;
+            })
+            .addCase(cancel.fulfilled, (state, { payload }) => {
+                const { status, message } = payload;
+                
+                if (status === 1) {
+                    state.isSuccess = true;
+                } else {
+                    state.error = { message };
+                }
+            })
+            .addCase(cancel.rejected, (state, { payload }) => {
+                state.error = payload;
+            })
+            .addCase(finish.pending, (state) => {
+                state.isSuccess = false;
+                state.error = null;
+            })
+            .addCase(finish.fulfilled, (state, { payload }) => {
+                const { status, message } = payload;
+                
+                if (status === 1) {
+                    state.isSuccess = true;
+                } else {
+                    state.error = { message };
+                }
+            })
+            .addCase(finish.rejected, (state, { payload }) => {
+                state.error = payload;
+            })
     }
 });
 

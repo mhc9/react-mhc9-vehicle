@@ -129,11 +129,6 @@ const ReservationList = () => {
                                                     <Link
                                                         to={`/reservation/${reservation.id}/edit`}
                                                         className="btn text-warning px-1"
-                                                        onClick={() => {
-                                                            if (window.confirm('คุณต้องการยกเลิกรายการใช่หรือไม่?')) {
-                                                                dispatch(cancel({ id: reservation.id, data: { status: 9 } }));
-                                                            }
-                                                        }}
                                                     >
                                                         <FaEdit />
                                                     </Link>

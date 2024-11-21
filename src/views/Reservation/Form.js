@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Row, Col } from 'react-bootstrap'
 import { DatePicker, TimePicker } from '@material-ui/pickers'
@@ -6,7 +6,7 @@ import { FaMapMarkedAlt } from 'react-icons/fa'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import moment from 'moment'
-import { store } from '../../features/slices/reservationSlice'
+import { store, update } from '../../features/slices/reservationSlice'
 import { useStyles } from '../../hooks/useStyles'
 import MapSelection from '../../components/MapSelection'
 
@@ -22,30 +22,43 @@ const reservationSchema = Yup.object().shape({
     vehicles: Yup.number().min(1).required(),
 });
 
-const ReservationForm = () => {
+const ReservationForm = ({ reservation }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [selectedDate, setSelectedDate] = useState(moment());
     const [selectedTime, setSelectedTime] = useState(moment());
     const [showMap, setShowMap] = useState(false);
 
+    useEffect(() => {
+        if (reservation) {
+            setSelectedDate(moment(reservation.reserve_date));
+            setSelectedTime(moment(`${reservation.reserve_date} ${reservation.reserve_time}`));
+        }
+    }, [reservation]);
+
     const handleSubmit = (data, fomrik) => {
-        dispatch(store(data));
+        if (reservation) {
+            if (window.confirm('คุณต้องการบันทึกการแก้ไขจองรถใช่หรือไม่?')) {
+                dispatch(update({ id: reservation.id, data }));
+            }
+        } else {
+            dispatch(store(data));
+        }
     };
 
     return (
         <Formik
             initialValues={{
-                reserve_date: moment().format('YYYY-MM-DD'),
-                reserve_time: '',
-                type_id: '',
-                contact_name: '',
-                contact_tel: '',
-                destination: '',
-                coordinate: '',
-                passengers: 1,
-                vehicles: 1,
-                remark: ''
+                reserve_date: reservation ? reservation.reserve_date : moment().format('YYYY-MM-DD'),
+                reserve_time: reservation ? reservation.reserve_time : '',
+                type_id: reservation ? reservation.type_id : '',
+                contact_name: reservation ? reservation.contact_name : '',
+                contact_tel: reservation ? reservation.contact_tel : '',
+                destination: reservation ? reservation.destination : '',
+                coordinate: reservation ? reservation.coordinate : '',
+                passengers: reservation ? reservation.passengers : 1,
+                vehicles: reservation ? reservation.vehicles : 1,
+                remark: (reservation && reservation.remark) ? reservation.remark : ''
             }}
             validationSchema={reservationSchema}
             onSubmit={handleSubmit}
@@ -221,8 +234,8 @@ const ReservationForm = () => {
                         </Row>
                         
                         <Row className="px-[13px]">
-                            <button type="submit" className="btn btn-primary">
-                                จองรถ
+                            <button type="submit" className="btn btn-dark">
+                                {reservation ? 'แก้ไขจองรถ' : 'จองรถ'}
                             </button>
                         </Row>
                     </Form>
