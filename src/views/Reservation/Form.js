@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { Row, Col } from 'react-bootstrap'
 import { DatePicker, TimePicker } from '@material-ui/pickers'
 import { FaMapMarkedAlt } from 'react-icons/fa'
 import { Formik, Form } from 'formik'
