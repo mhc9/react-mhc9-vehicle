@@ -40,7 +40,7 @@ const DriverList = () => {
                                 <img src="https://cdn4.iconfinder.com/data/icons/taxi-service-flat/90/driver__taxi__cab__avatar_-512.png" alt="driver-pic" className="w-full" />
                             </div>
                             <div className="text-center flex flex-col items-start md:items-center justify-center">
-                                <p className="text-xl font-semibold">{driver.firstname} {driver.lastname}</p>
+                                <p className="text-xl font-semibold">{driver.firstname} {driver.lastname} ({driver.nickname})</p>
                                 <p className="text-lg">{driver.member_of?.name}</p>
                                 <p className="flex items-center gap-1 mb-2">
                                     <FaPhoneSquareAlt size={'20px'} />
