@@ -7,6 +7,8 @@ import AddReservation from './views/Reservation/Add'
 import EditReservation from './views/Reservation/Edit'
 import VehicleList from './views/Vehicle'
 import DriverList from './views/Driver'
+import AddDriver from "./views/Driver/Add";
+import EditDriver from "./views/Driver/Edit";
 import DriverDetail from "./views/Driver/Detail";
 import DriverAssignmentList from "./views/Driver/AssignmentList";
 
@@ -20,6 +22,8 @@ function App() {
                 <Route path="/reservation/:id/edit" element={<EditReservation />} />
                 <Route path="/vehicle" element={<VehicleList />} />
                 <Route path="/driver" element={<DriverList />} />
+                <Route path="/driver/add" element={<AddDriver />} />
+                <Route path="/driver/:id/edit" element={<EditDriver />} />
                 <Route path="/driver/:id" element={<DriverDetail />} />
                 <Route path="/driver/:id/assignments" element={<DriverAssignmentList />} />
             </Route>

@@ -20,6 +20,7 @@ const DriverDetail = () => {
             <div className="hidden min-[490px]:block">
                 <Breadcrumb>
                     <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/" }}>หน้าหลัก</Breadcrumb.Item>
+                    <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/driver" }}>คนขับ</Breadcrumb.Item>
                     <Breadcrumb.Item active>รายละเอียดคนขับ</Breadcrumb.Item>
                 </Breadcrumb>
             </div>

@@ -55,8 +55,6 @@ export const update = createAsyncThunk("driver/update", async ({ id, data }, { d
     try {
         const res = await api.post(`/api/drivers/${id}/update`, data);
 
-        dispatch(getDrivers({ url: '/api/drivers' }));
-
         return res.data;
     } catch (error) {
         rejectWithValue(error);
@@ -66,8 +64,6 @@ export const update = createAsyncThunk("driver/update", async ({ id, data }, { d
 export const destroy = createAsyncThunk("driver/destroy", async ({ id }, { dispatch, rejectWithValue }) => {
     try {
         const res = await api.post(`/api/drivers/${id}/delete`);
-
-        dispatch(getDrivers({ url: '/api/drivers' }));
 
         return res.data;
     } catch (error) {
@@ -146,32 +142,40 @@ export const driverSlice = createSlice({
                 state.isLoading = false;
                 state.error = payload;
             })
-    //     [store.pending]: (state) => {
-    //         state.isLoading = true;
-    //         state.isSuccess = false;
-    //         state.error = null;
-    //     },
-    //     [store.fulfilled]: (state, { payload }) => {
-    //         state.isLoading = false
-    //         state.isSuccess = true;
-    //     },
-    //     [store.rejected]: (state, { payload }) => {
-    //         state.isLoading = false;
-    //         state.error = payload;
-    //     },
-    //     [update.pending]: (state) => {
-    //         state.isLoading = true;
-    //         state.isSuccess = false;
-    //         state.error = null;
-    //     },
-    //     [update.fulfilled]: (state, { payload }) => {
-    //         state.isLoading = false
-    //         state.isSuccess = true;
-    //     },
-    //     [update.rejected]: (state, { payload }) => {
-    //         state.isLoading = false;
-    //         state.error = payload;
-    //     },
+            .addCase(store.pending, (state) => {
+                state.isSuccess = false;
+                state.error = null;
+            })
+            .addCase(store.fulfilled, (state, { payload }) => {
+                const { status, message, driver } = payload;
+
+                if (status === 1) {
+                    state.isSuccess = true;
+                    state.driver = driver;
+                } else {
+                    state.error = { message };
+                }
+            })
+            .addCase(store.rejected, (state, { payload }) => {
+                state.error = payload;
+            })
+            .addCase(update.pending, (state) => {
+                state.isSuccess = false;
+                state.error = null;
+            })
+            .addCase(update.fulfilled, (state, { payload }) => {
+                const { status, message, driver } = payload;
+
+                if (status === 1) {
+                    state.isSuccess = true;
+                    state.driver = driver;
+                } else {
+                    state.error = { message };
+                }
+            })
+            .addCase(update.rejected, (state, { payload }) => {
+                state.error = payload;
+            })
     //     [destroy.pending]: (state) => {
     //         state.isLoading = true;
     //         state.isSuccess = false;
