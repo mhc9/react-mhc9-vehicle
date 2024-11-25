@@ -125,7 +125,7 @@ const ReservationList = () => {
                                     <div className={`reservation-btn flex flex-col gap-1 ${[3,9].includes(reservation.status) && 'hidden'}`}>
                                         {reservation.status === 1 && (
                                             <>
-                                                <div className="flex flex-row items-center justify-end gap-2 mb-2">
+                                                <div className="flex flex-row items-start justify-end gap-2 mb-2">
                                                     <Link
                                                         to={`/reservation/${reservation.id}/edit`}
                                                         className="btn text-warning px-1"
@@ -156,17 +156,27 @@ const ReservationList = () => {
                                         )}
 
                                         {reservation.status === 2 && (
-                                            <button
-                                                type="button"
-                                                className="btn btn-success"
-                                                onClick={() => {
-                                                    if (window.confirm('คุณต้องการจบงานใช่หรือไม่?')) {
-                                                        dispatch(finish({ id: reservation.id, data: { status: 3 } }));
-                                                    }
-                                                }}
-                                            >
-                                                จบงาน
-                                            </button>
+                                            <>
+                                                <div className="flex flex-row items-start justify-end gap-2 mb-2">
+                                                    <Link
+                                                        to={`/reservation/${reservation.id}/edit`}
+                                                        className="btn text-warning px-1"
+                                                    >
+                                                        <FaEdit />
+                                                    </Link>
+                                                </div>
+                                                <button
+                                                    type="button"
+                                                    className="btn btn-success"
+                                                    onClick={() => {
+                                                        if (window.confirm('คุณต้องการจบงานใช่หรือไม่?')) {
+                                                            dispatch(finish({ id: reservation.id, data: { status: 3 } }));
+                                                        }
+                                                    }}
+                                                >
+                                                    จบงาน
+                                                </button>
+                                            </>
                                         )}
                                     </div>
                                 </div>
